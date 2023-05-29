@@ -77,7 +77,7 @@ namespace DataBase
         /// Добавить запись в конкретную таблицу
         /// </summary>
         /// <param name="tableName">Название таблицы</param>
-        /// <param name="dataValues">ВВОДИТЬ СТРОГО ПО ПОРЯДКУ значения для записи в таблицу</param>
+        /// <param name="dataValues">ВВОДИТЬ СТРОГО ПО ПОРЯДКУ значения для записи в таблицу, кроме Id</param>
         /// <returns>Истину, если получилось. Иначе ложь</returns>
         public static bool Add(string tableName, params object?[] dataValues)
         {

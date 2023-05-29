@@ -28,6 +28,20 @@ app.MapPost(middlewareUsersPath + "/{userString}", (string userString) =>
     }
 });
 
+app.MapPut(middlewareUsersPath + "/{userString}", (string userString) =>
+{
+    try
+    {
+        User user = JsonConvert.DeserializeObject<User>(userString);
+
+        return Results.Json(Users.Update(user));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 app.MapGet(middlewareUsersPath + "/{userString}", (string userString) =>
 {
     try

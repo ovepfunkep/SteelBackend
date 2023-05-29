@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Testing frontend</title>
+</head>
+<body>
+    <button id="buttonAddUser">AddUser</button>
+    <button id="buttonGetUserByData">GetUserByData</button>
+    <button id="buttonGetUserById">GetUserById</button>
+    <button id="buttonGetMainActivities">GetMainActivities</button>
+    <button id="buttonGetMainTeachers">GetMainTeachers</button>
+    <button id="buttonGetMainNews">GetMainNews</button>
+    <button id="buttonGetMonthTrainings">GetMonthTrainings</button>
+    <button id="buttonPostAppointment">PostAppointment</button>
+    <button id="buttonGetAllActivities">GetAllActivities</button>
+    <button id="buttonGetCertainActivity">GetCertainActivity</button>
+    <button id="buttonGetCertainActivityTeachers">GetCertainActivityTeachers</button>
+    <button id="buttonGetUpcomingUserTrainings">GetUpcomingUserTrainings</button>
+    <button id="buttonGetUsersAchievments">GetUsersAchievments</button>
+    <script>
+        document.getElementById("buttonAddUser").addEventListener("click", async () => {
+            try {
+                const user = { Phone: "1", Password: "1"}
+                const userString = encodeURIComponent(JSON.stringify(user));
+                const response = await fetch(`/api/users/${userString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const user = await response.json();
+                    console.log(user);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetUserByData").addEventListener("click", async () => {
+            try {
+                const user = { Phone: "1" }
+                const userString = encodeURIComponent(JSON.stringify(user));
+                const response = await fetch(`/api/users/${userString}`);
+
+                if (response.ok === true) {
+                    const user = await response.json();
+                    console.log(user);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetUserById").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/users/15`);
+
+                if (response.ok === true) {
+                    const user = await response.json();
+                    console.log(user);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetMainActivities").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/activities/main");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetMainTeachers").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/teachers/main");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetMainNews").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/news/main");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetMonthTrainings").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/trainings/monthly/${(new Date()).toJSON()}`);
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonPostAppointment").addEventListener("click", async () => {
+            try {
+                const appointment = {
+                    TrainingId: "1",
+                    UserId: "15"
+                }
+                const appointmentString = JSON.stringify(appointment);
+                const response = await fetch(`/api/appointments/${appointmentString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetAllActivities").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/activities");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetCertainActivity").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/activities/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetCertainActivityTeachers").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/teachers/activity/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetUpcomingUserTrainings").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/trainings/users/15");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetUsersAchievments").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/achievements/users/15");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+    </script>
+</body>
+</html>
