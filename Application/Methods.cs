@@ -43,21 +43,42 @@ namespace Application
 
             public static User Add(User user)
             {
-                
                 int roleId = Convert.ToInt32(DataBase.Methods.GetCustom("Select * from `Роли` where `Название` = 'Клиент'")![0][0]);
+                
                 DataBase.Methods.Add("Пользователи", new object[] { roleId,
                                                                     user.Surname == null ? DBNull.Value : user.Surname,
                                                                     user.Name == null ? DBNull.Value : user.Name,
                                                                     user.MiddleName == null ? DBNull.Value : user.MiddleName,
                                                                     user.Email == null ? DBNull.Value : user.Email,
-                                                                    user.Phone == null ? DBNull.Value : user.Phone,
-                                                                    user.Password == null ? DBNull.Value : user.Password,
+                                                                    user.Phone,
+                                                                    user.Password,
                                                                     user.Gender == null ? DBNull.Value : user.Gender,
                                                                     user.DateOfBirth == null ? DBNull.Value : user.DateOfBirth,
                                                                     user.Photo == null ? DBNull.Value : user.Photo,
                                                                     user.Vkontakte == null ? DBNull.Value : user.Vkontakte,
                                                                     user.Telegram == null ? DBNull.Value : user.Telegram,
                                                                     user.City == null ? DBNull.Value : user.City});
+                
+                return DataBase.Methods.GetCustom($"Select * from `Пользователи` where `Телефон` = '{user.Phone}'")[0].ToUser();
+
+            }
+            
+            public static User Update(User user)
+            {
+                DataBase.Methods.Update("Пользователи", new object[] { user.Id,
+                                                                       user.RoleId,
+                                                                       user.Surname == null ? DBNull.Value : user.Surname,
+                                                                       user.Name == null ? DBNull.Value : user.Name,
+                                                                       user.MiddleName == null ? DBNull.Value : user.MiddleName,
+                                                                       user.Email == null ? DBNull.Value : user.Email,
+                                                                       user.Phone == null ? DBNull.Value : user.Phone,
+                                                                       user.Password == null ? DBNull.Value : user.Password,
+                                                                       user.Gender == null ? DBNull.Value : user.Gender,
+                                                                       user.DateOfBirth == null ? DBNull.Value : user.DateOfBirth,
+                                                                       user.Photo == null ? DBNull.Value : user.Photo,
+                                                                       user.Vkontakte == null ? DBNull.Value : user.Vkontakte,
+                                                                       user.Telegram == null ? DBNull.Value : user.Telegram,
+                                                                       user.City == null ? DBNull.Value : user.City});
                 return DataBase.Methods.GetCustom($"Select * from `Пользователи` where `Телефон` = '{user.Phone}'")[0].ToUser();
 
             }
