@@ -7,6 +7,55 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="bin\Debug\net6.0\appsettings.Development.json" />
+    <Content Include="bin\Debug\net6.0\appsettings.json" />
+    <Content Include="bin\Debug\net6.0\WebAPI.deps.json" />
+    <Content Include="bin\Debug\net6.0\WebAPI.runtimeconfig.json" />
+    <Content Include="bin\Debug\net6.0\WebAPI.staticwebassets.runtime.json" />
+    <Content Include="bin\Release\net6.0\appsettings.Development.json" />
+    <Content Include="bin\Release\net6.0\appsettings.json" />
+    <Content Include="bin\Release\net6.0\publish\appsettings.Development.json" />
+    <Content Include="bin\Release\net6.0\publish\appsettings.json" />
+    <Content Include="bin\Release\net6.0\publish\WebAPI.deps.json" />
+    <Content Include="bin\Release\net6.0\publish\WebAPI.runtimeconfig.json" />
+    <Content Include="bin\Release\net6.0\publish\wwwroot\index.html" />
+    <Content Include="bin\Release\net6.0\WebAPI.deps.json" />
+    <Content Include="bin\Release\net6.0\WebAPI.runtimeconfig.json" />
+    <Content Include="bin\Release\net6.0\WebAPI.staticwebassets.runtime.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net6.0\Application.dll" />
+    <None Include="bin\Debug\net6.0\Application.pdb" />
+    <None Include="bin\Debug\net6.0\DataBase.dll" />
+    <None Include="bin\Debug\net6.0\DataBase.pdb" />
+    <None Include="bin\Debug\net6.0\MySqlConnector.dll" />
+    <None Include="bin\Debug\net6.0\Newtonsoft.Json.dll" />
+    <None Include="bin\Debug\net6.0\WebAPI.dll" />
+    <None Include="bin\Debug\net6.0\WebAPI.exe" />
+    <None Include="bin\Debug\net6.0\WebAPI.pdb" />
+    <None Include="bin\Release\net6.0\Application.dll" />
+    <None Include="bin\Release\net6.0\Application.pdb" />
+    <None Include="bin\Release\net6.0\DataBase.dll" />
+    <None Include="bin\Release\net6.0\DataBase.pdb" />
+    <None Include="bin\Release\net6.0\MySqlConnector.dll" />
+    <None Include="bin\Release\net6.0\Newtonsoft.Json.dll" />
+    <None Include="bin\Release\net6.0\publish\Application.dll" />
+    <None Include="bin\Release\net6.0\publish\Application.pdb" />
+    <None Include="bin\Release\net6.0\publish\DataBase.dll" />
+    <None Include="bin\Release\net6.0\publish\DataBase.pdb" />
+    <None Include="bin\Release\net6.0\publish\MySqlConnector.dll" />
+    <None Include="bin\Release\net6.0\publish\Newtonsoft.Json.dll" />
+    <None Include="bin\Release\net6.0\publish\web.config" />
+    <None Include="bin\Release\net6.0\publish\WebAPI.dll" />
+    <None Include="bin\Release\net6.0\publish\WebAPI.exe" />
+    <None Include="bin\Release\net6.0\publish\WebAPI.pdb" />
+    <None Include="bin\Release\net6.0\WebAPI.dll" />
+    <None Include="bin\Release\net6.0\WebAPI.exe" />
+    <None Include="bin\Release\net6.0\WebAPI.pdb" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
