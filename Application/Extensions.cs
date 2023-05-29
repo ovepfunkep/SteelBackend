@@ -13,6 +13,7 @@ namespace Application
                 nameof(Teacher) => (T)(object)list.ToTeacher(),
                 nameof(News) => (T)(object)list.ToNews(),
                 nameof(Training) => (T)(object)list.ToTraining(),
+                nameof(Achievement) => (T)(object)list.ToAchievement(),
                 _ => throw new ArgumentException($"There's now such class as {typeof(T).Name}")
             };
 
@@ -43,17 +44,21 @@ namespace Application
                                                                        list[3] as string);
 
         public static News ToNews(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                  list[1] as string,
-                                                                  list[2] as string,
-                                                                  list[3] as string,
-                                                                  list[4] as string);
+                                                                 list[1] as string,
+                                                                 list[2] as string,
+                                                                 list[3] as string,
+                                                                 list[4] as string);
 
         public static Training ToTraining(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                          Convert.ToInt32(list[1]),
-                                                                          Convert.ToInt32(list[2]),
-                                                                          Convert.ToDateTime(list[3]),
-                                                                          Convert.ToInt32(list[4]));
+                                                                         Convert.ToInt32(list[1]),
+                                                                         Convert.ToInt32(list[2]),
+                                                                         Convert.ToDateTime(list[3]),
+                                                                         Convert.ToInt32(list[4]));
 
+        public static Achievement ToAchievement(this List<object> list) => new(Convert.ToInt32(list[0]),
+                                                                               list[1] as string,
+                                                                               list[2] as string,
+                                                                               list[3] as string);
 
         public static int LeftSeats(this Training training) => Convert.ToInt32(DataBase.Methods.GetCustom(@$"SELECT `Занятия`.`Общее кол-во мест` - Занято
 FROM `Занятия`

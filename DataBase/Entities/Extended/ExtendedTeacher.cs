@@ -14,8 +14,8 @@ namespace DataBase.Entities.Extended
 
         public ExtendedTeacher(int id,
                                int userId,
-                               float experience,
-                               string description,
+                               float? experience,
+                               string? description,
                                User user,
                                string photo,
                                List<Activity>? activities = null) : base(id, userId, experience, description)

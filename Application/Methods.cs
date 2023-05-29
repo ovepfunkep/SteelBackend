@@ -5,6 +5,24 @@ namespace Application
 {
     public class Methods
     {
+        public static class Generic
+        {
+            public static List<T> Get<T>(string tableName, List<int>? ids = null)
+            {
+                List<T> result = new();
+                if (ids != null)
+                {
+                    foreach (int id in ids)
+                    {
+                        try { result.Add(DataBase.Methods.GetCustom($"Select * from {tableName} where `Id` = {id}")[0].ToClassInstance<T>()); }
+                        catch { }
+                    }
+                    return result;
+                }
+                else return DataBase.Methods.Get(tableName).Select(listOfObjects => listOfObjects.ToClassInstance<T>()).ToList();
+            }
+        }
+
         public static class Users
         {
             public static User? Get(int id = 0, string phone = "", string password = "")
@@ -45,29 +63,11 @@ namespace Application
             }
         }
 
-        public static class Generic
-        {
-            public static List<T> Get<T>(string tableName, List<int>? ids = null)
-            {
-                List<T> result = new();
-                if (ids != null)
-                {
-                    foreach (int id in ids)
-                    {
-                        try { result.Add(DataBase.Methods.GetCustom($"Select * from {tableName} where `Id` = {id}")[0].ToClassInstance<T>()); }
-                        catch { }
-                    }
-                    return result;
-                }
-                else return DataBase.Methods.Get(tableName).Select(listOfObjects => listOfObjects.ToClassInstance<T>()).ToList();
-            }
-        }
-
         public static class Activities
         {
             public static List<Activity> Get(List<int>? ids = null) => Generic.Get<Activity>("Направления", ids);
 
-            public static List<Activity> Get(int teacherId) => 
+            public static List<Activity> GetByTeacherId(int teacherId) => 
                 DataBase.Methods.GetCustom(@$"SELECT `Направления`.`Id`, `Название`, `Описание`, `Фотография`, `Длительность` 
 FROM `Направления` 
 INNER JOIN `Преподаватели направлений` on `Преподаватели направлений`.`Id направления` = `Направления`.`Id`
@@ -85,7 +85,7 @@ WHERE `Преподаватели направлений`.`Id` = {teacherId}")
                 foreach (Teacher teacher in teachers)
                 {
                     User user = Users.Get(teacher.UserId);
-                    List<Activity>? activities = needActivities == true ? Activities.Get(teacher.Id) : null;
+                    List<Activity>? activities = needActivities == true ? Activities.GetByTeacherId(teacher.Id) : null;
 
                     extendedTeachers.Add(new ExtendedTeacher(teacher.Id,
                                                              teacher.UserId,
@@ -147,10 +147,8 @@ WHERE `Id направления` = {activityId}")
                 return values.Select(lo => lo.ToTraining()).ToList();
             }
 
-            public static List<ExtendedTraining> GetExtended(DateTime? start = null, DateTime? end = null)
+            static List<ExtendedTraining> ConvertToExtended(List<Training> trainings)
             {
-                List<Training> trainings = Get(start, end);
-
                 List<ExtendedTraining> extendedTrainings = new();
 
                 foreach (Training training in trainings)
@@ -172,15 +170,51 @@ WHERE `Id направления` = {activityId}")
 
                 return extendedTrainings;
             }
+
+            public static List<ExtendedTraining> GetExtended(DateTime? start = null, DateTime? end = null)
+            {
+                List<Training> trainings = Get(start, end);                
+
+                return ConvertToExtended(trainings);
+            }
+
+            public static List<ExtendedTraining> GetUpcomingExtendedByUserId(int userId)
+            {
+                List<Training> trainings = DataBase.Methods.GetCustom($@"SELECT `Занятия`.`Id`, `Id направления`, `Id преподавателя`, `Дата и время`, `Общее кол-во мест`
+FROM `Занятия` 
+Inner join `Записи на занятия` on `Записи на занятия`.`Id занятия` = `Занятия`.`Id`
+WHERE `Записи на занятия`.`Id пользователя` = {userId}
+  And `Дата и время` > '{DateTime.Now.ToDBFormat()}'")
+                                                           .Select(lo => lo.ToTraining())
+                                                           .ToList();
+
+                return ConvertToExtended(trainings);
+            }
         }
     
         public static class Appointments
         {
-            public static bool Exists(int trainingId, int userId) => DataBase.Methods.GetCustom(@$"Select * from `Записи на занятия`
+            public static bool Get(int trainingId, int userId) => DataBase.Methods.GetCustom(@$"Select * from `Записи на занятия`
                                                                                                    where `Id занятия` = {trainingId} 
                                                                                                    and `Id пользователя` = {userId}").Count > 0;
 
             public static bool Add(int trainingId, int userId) => DataBase.Methods.Add("Записи на занятия", new object[] { trainingId, userId });
+        }
+
+        public static class Achievements
+        {
+            public static List<Achievement> GetByUserId(int userId)
+            {
+                
+                    List<Achievement> achievements = DataBase.Methods.GetCustom($@"SELECT `Ачивки`.`Id`, `Название`, `Описание`, `Фотография` 
+FROM `Ачивки`
+INNER JOIN `Ачивки пользователей` on `Ачивки пользователей`.`Id ачивки` = `Ачивки`.`Id`
+WHERE `Id пользователя` = {userId}")
+                                                                     .Select(lo => lo.ToAchievement())
+                                                                     .ToList();
+
+                    return achievements;
+            }
         }
     }
 }

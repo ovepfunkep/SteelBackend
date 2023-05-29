@@ -32,9 +32,21 @@ app.MapGet(middlewareUsersPath + "/{userString}", (string userString) =>
 {
     try
     {
-        User user = JsonConvert.DeserializeObject<User>(userString);
-        User? dbUser = Users.Get(user.Id, user.Phone, user.Password);
+        User? dbUser;
+
+        try 
+        { 
+            User user = JsonConvert.DeserializeObject<User>(userString);
+            dbUser = Users.Get(user.Id, user.Phone, user.Password);
+        }
+        catch
+        {
+            int userId = Convert.ToInt32(userString);
+            dbUser = Users.Get(userId);
+        }
+
         if (dbUser == null) throw new Exception("User not exists.");
+
         return Results.Json(dbUser);
     }
     catch (Exception ex)
@@ -145,7 +157,7 @@ app.MapGet(middlewareTrainingsPath + "/users/{userId}", (int userId) =>
 {
     try
     {
-        return Results.Json(Trainings.GetExtended());
+        return Results.Json(Trainings.GetUpcomingExtendedByUserId(userId));
     }
     catch (Exception ex)
     {
@@ -161,10 +173,25 @@ app.MapPost(middlewareAppointmentsPath + "/{appointmentString}", (string appoint
     try
     {
         Appointment appointment = JsonConvert.DeserializeObject<Appointment>(appointmentString);
-        if (Appointments.Exists(appointment.TrainingId, appointment.UserId))
+        if (Appointments.Get(appointment.TrainingId, appointment.UserId))
             throw new Exception("User already signed up!");
 
         return Results.Json(Appointments.Add(appointment.TrainingId, appointment.UserId));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+//Achievements middleware
+string middlewareAchievementsPath = "/api/achievements";
+
+app.MapGet(middlewareAchievementsPath + "/users/{userId}", (int userId) =>
+{
+    try
+    {
+        return Results.Json(Achievements.GetByUserId(userId));
     }
     catch (Exception ex)
     {

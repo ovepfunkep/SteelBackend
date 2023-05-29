@@ -10,10 +10,10 @@ namespace DataBase.Entities
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public float Experience { get; set; }
-        public string Description { get; set; }
+        public float? Experience { get; set; }
+        public string? Description { get; set; }
 
-        public Teacher(int id, int userId, float expirience, string description)
+        public Teacher(int id, int userId, float? expirience, string? description)
         {
             Id = id;
             UserId = userId;
