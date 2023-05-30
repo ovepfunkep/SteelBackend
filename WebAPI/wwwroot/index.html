@@ -18,6 +18,8 @@
     <button id="buttonGetCertainActivityTeachers">GetCertainActivityTeachers</button>
     <button id="buttonGetUpcomingUserTrainings">GetUpcomingUserTrainings</button>
     <button id="buttonGetUsersAchievments">GetUsersAchievments</button>
+    <button id="buttonUpdateUser">UpdateUser</button>
+    <button id="buttonGetUsers">GetUsers</button>
     <script>
         document.getElementById("buttonAddUser").addEventListener("click", async () => {
             try {
@@ -223,6 +225,43 @@
         document.getElementById("buttonGetUsersAchievments").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/achievements/users/15");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonUpdateUser").addEventListener("click", async () => {
+            try {
+                const user = {
+                    id: 20,
+                    name: "Vanya"
+                }
+                const userString = JSON.stringify(user);
+                const response = await fetch(`/api/users/${userString}`, {method: "PUT"});
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonGetUsers").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/users");
 
                 if (response.ok === true) {
                     const data = await response.json();

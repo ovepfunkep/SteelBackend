@@ -40,6 +40,8 @@ namespace Application
                 if (values.Count == 0) return null;
                 return values[0].ToUser();
             }
+            
+            public static List<User> Get() => DataBase.Methods.Get("Пользователи").Select(lo => lo.ToUser()).ToList();
 
             public static User Add(User user)
             {

@@ -4,25 +4,23 @@ using Newtonsoft.Json;
 using static Application.Extensions;
 using System.Linq;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("http://example.com",
-                                              "http://www.contoso.com");
-                      });
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors();
 
 //Users middleware
 string middlewareUsersPath = "/api/users";
@@ -76,6 +74,18 @@ app.MapGet(middlewareUsersPath + "/{userString}", (string userString) =>
         if (dbUser == null) throw new Exception("User not exists.");
 
         return Results.Json(dbUser);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapGet(middlewareUsersPath, () =>
+{
+    try
+    {
+        return Results.Json(Users.Get());
     }
     catch (Exception ex)
     {
