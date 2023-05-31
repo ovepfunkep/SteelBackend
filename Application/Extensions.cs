@@ -14,59 +14,77 @@ namespace Application
                 nameof(News) => (T)(object)list.ToNews(),
                 nameof(Training) => (T)(object)list.ToTraining(),
                 nameof(Achievement) => (T)(object)list.ToAchievement(),
+                nameof(Review) => (T)(object)list.ToReview(),
                 _ => throw new ArgumentException($"There's now such class as {typeof(T).Name}")
             };
 
-        public static User ToUser(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                 Convert.ToInt32((int)list[1]),
-                                                                 list[6] as string,
-                                                                 list[7] as string,
-                                                                 list[2] as string,
-                                                                 list[3] as string,
-                                                                 list[4] as string,
-                                                                 list[5] as string,
-                                                                 list[8] as string,
-                                                                 list[9] as DateTime?,
-                                                                 list[10] as string,
-                                                                 list[11] as string,
-                                                                 list[12] as string,
-                                                                 list[13] as string);
+        //List<object> to class instance converters
+        
+        public static User ToUser(this List<object> list) => new(list[0].ToInt(),
+                                                                 list[1].ToInt(),
+                                                                 list[2].ToStr(),
+                                                                 list[3].ToStr(),
+                                                                 list[4].ToStr(),
+                                                                 list[5].ToStr(),
+                                                                 list[6].ToStr(),
+                                                                 list[7].ToStr(),
+                                                                 list[8].ToStr(),
+                                                                 list[9].ToDateTime(),
+                                                                 list[10].ToStr(),
+                                                                 list[11].ToStr(),
+                                                                 list[12].ToStr());
 
-        public static Activity ToActivity(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                         list[1] as string,
-                                                                         list[2] as string,
-                                                                         list[3] as string,
-                                                                         Convert.ToInt32(list[4]));
+        public static Activity ToActivity(this List<object> list) => new(list[0].ToInt(),
+                                                                         list[1].ToStr(),
+                                                                         list[2].ToStr(),
+                                                                         list[3].ToStr(),
+                                                                         list[4].ToStr(),
+                                                                         list[5].ToInt());
 
-        public static Teacher ToTeacher(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                       Convert.ToInt32(list[1]),
-                                                                       (float)Convert.ToDouble(list[2]),
-                                                                       list[3] as string);
+        public static Teacher ToTeacher(this List<object> list) => new(list[0].ToInt(),
+                                                                       list[1].ToInt(),
+                                                                       list[2].ToFloat(),
+                                                                       list[3].ToStr());
 
-        public static News ToNews(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                 list[1] as string,
-                                                                 list[2] as string,
-                                                                 list[3] as string,
-                                                                 list[4] as string);
+        public static News ToNews(this List<object> list) => new(list[0].ToInt(),
+                                                                 list[1].ToStr(),
+                                                                 list[2].ToStr(),
+                                                                 list[3].ToStr(),
+                                                                 list[4].ToStr());
 
-        public static Training ToTraining(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                         Convert.ToInt32(list[1]),
-                                                                         Convert.ToInt32(list[2]),
-                                                                         Convert.ToDateTime(list[3]),
-                                                                         Convert.ToInt32(list[4]));
+        public static Training ToTraining(this List<object> list) => new(list[0].ToInt(),
+                                                                         list[1].ToInt(),
+                                                                         list[2].ToInt(),
+                                                                         list[3].ToDateTime(),
+                                                                         list[4].ToInt());
 
-        public static Achievement ToAchievement(this List<object> list) => new(Convert.ToInt32(list[0]),
-                                                                               list[1] as string,
-                                                                               list[2] as string,
-                                                                               list[3] as string);
+        public static Achievement ToAchievement(this List<object> list) => new(list[0].ToInt(),
+                                                                               list[1].ToStr(),
+                                                                               list[2].ToStr(),
+                                                                               list[3].ToStr());
+        
+        public static Review ToReview(this List<object> list) => new(list[0].ToInt(),
+                                                                     list[1].ToInt(),
+                                                                     list[2].ToInt(),
+                                                                     list[3].ToStr(),
+                                                                     list[4].ToInt());
 
-        public static int LeftSeats(this Training training) => Convert.ToInt32(DataBase.Methods.GetCustom(@$"SELECT `Занятия`.`Общее кол-во мест` - Занято
+        public static int LeftSeats(this Training training) => DataBase.Methods.GetCustom(@$"SELECT `Занятия`.`Общее кол-во мест` - Занято
 FROM `Занятия`
 INNER JOIN (SELECT COUNT(Id) AS Занято
             FROM `Записи на занятия`
             WHERE `Id занятия` = {training.Id}) AS Записи
-WHERE `Id` = {training.Id}")[0][0]);
+WHERE `Id` = {training.Id}")[0][0].ToInt();
 
         public static string ToDBFormat(this DateTime dateTime) => dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+        //Objects to types converters
+        public static int ToInt(this object value) => Convert.IsDBNull(value) ? default : Convert.ToInt32(value);
+
+        public static string ToStr(this object value) => Convert.IsDBNull(value) ? string.Empty : Convert.ToString(value)!;
+
+        public static DateTime ToDateTime(this object value) => Convert.IsDBNull(value) ? default : Convert.ToDateTime(value);
+
+        public static float ToFloat(this object value) => (float)(Convert.IsDBNull(value) ? default : Convert.ToDouble(value));
     }
 }

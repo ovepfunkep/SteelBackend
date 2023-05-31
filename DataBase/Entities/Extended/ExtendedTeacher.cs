@@ -8,20 +8,17 @@ namespace DataBase.Entities.Extended
 {
     public class ExtendedTeacher : Teacher
     {
-        public User User { get; set; }
-        public string Photo { get; set; }
-        public List<Activity>? Activities { get; set; }
+        public User User { get; set; } = new();
+        public List<Activity>? Activities { get; set; } = null;
 
         public ExtendedTeacher(int id,
                                int userId,
-                               float? experience,
-                               string? description,
+                               float experience,
+                               string description,
                                User user,
-                               string photo,
                                List<Activity>? activities = null) : base(id, userId, experience, description)
         {
             User = user;
-            Photo = photo;
             Activities = activities;
         }
     }

@@ -10,8 +10,8 @@ namespace DataBase.Entities.Extended
     {
         public Activity Activity { get; set; }
         public Teacher Teacher { get; set; }
-        public DateTime DateTimeEnd { get; set; }
-        public int LeftSeats { get; set; }
+        public DateTime DateTimeEnd { get; set; } 
+        public int LeftSeats { get; set; } 
 
         public ExtendedTraining(int id, 
                                 int activityId, 

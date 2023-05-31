@@ -25,64 +25,70 @@ namespace Application
 
         public static class Users
         {
-            public static User? Get(int id = 0, string phone = "", string password = "")
+            public static List<User> Get(int id = 0, string phone = "", string password = "")
             {
-                string idPart = "", phonePart = "", passwordPart = "";
+                string query = "Select * from `Пользователи`";
                 if (id == 0)
                 {
-                    if (string.IsNullOrEmpty(phone)) throw new ArgumentException("Arguments were not provided to the function!");
-                    phonePart = $" Телефон = '{phone}'";
-                    passwordPart = string.IsNullOrEmpty(password) ? "" : $" and Пароль = {password}";
+                    if (!string.IsNullOrEmpty(phone)) query += @$"
+Where `Телефон` = '{phone}'";
+                    query += string.IsNullOrEmpty(password) ? string.Empty : $" and Пароль = {password}";
                 }
-                else idPart = $" Id = {id}";
+                else query += @$"
+Where `Id` = {id}";
 
-                List<List<object>> values = DataBase.Methods.GetCustom($"Select * from `Пользователи` where{idPart}{phonePart}{passwordPart}");
-                if (values.Count == 0) return null;
-                return values[0].ToUser();
+                List<List<object>> values = DataBase.Methods.GetCustom(query);
+                if (values.Count == 0) return new List<User>();
+                return values.Select(lo => lo.ToUser()).ToList();
             }
-            
+
             public static List<User> Get() => DataBase.Methods.Get("Пользователи").Select(lo => lo.ToUser()).ToList();
 
-            public static User Add(User user)
+            public static User? Add(User user)
             {
                 int roleId = Convert.ToInt32(DataBase.Methods.GetCustom("Select * from `Роли` where `Название` = 'Клиент'")![0][0]);
-                
+
                 DataBase.Methods.Add("Пользователи", new object[] { roleId,
-                                                                    user.Surname == null ? DBNull.Value : user.Surname,
-                                                                    user.Name == null ? DBNull.Value : user.Name,
-                                                                    user.MiddleName == null ? DBNull.Value : user.MiddleName,
-                                                                    user.Email == null ? DBNull.Value : user.Email,
+                                                                    user.Surname,
+                                                                    user.Name,
+                                                                    user.MiddleName,
+                                                                    user.Email,
                                                                     user.Phone,
                                                                     user.Password,
-                                                                    user.Gender == null ? DBNull.Value : user.Gender,
-                                                                    user.DateOfBirth == null ? DBNull.Value : user.DateOfBirth,
-                                                                    user.Photo == null ? DBNull.Value : user.Photo,
-                                                                    user.Vkontakte == null ? DBNull.Value : user.Vkontakte,
-                                                                    user.Telegram == null ? DBNull.Value : user.Telegram,
-                                                                    user.City == null ? DBNull.Value : user.City});
-                
-                return DataBase.Methods.GetCustom($"Select * from `Пользователи` where `Телефон` = '{user.Phone}'")[0].ToUser();
+                                                                    user.Gender,
+                                                                    user.DateOfBirth,
+                                                                    user.Photo,
+                                                                    user.Vkontakte,
+                                                                    user.Telegram,
+                                                                    user.City});
 
+                List<User> dbUser = Get(phone: user.Phone);
+
+                return dbUser.Count > 0 ? dbUser[0] : null;
             }
-            
-            public static User Update(User user)
+
+            public static User? Update(User user)
             {
                 DataBase.Methods.Update("Пользователи", new object[] { user.Id,
                                                                        user.RoleId,
-                                                                       user.Surname == null ? DBNull.Value : user.Surname,
-                                                                       user.Name == null ? DBNull.Value : user.Name,
-                                                                       user.MiddleName == null ? DBNull.Value : user.MiddleName,
-                                                                       user.Email == null ? DBNull.Value : user.Email,
-                                                                       user.Phone == null ? DBNull.Value : user.Phone,
-                                                                       user.Password == null ? DBNull.Value : user.Password,
-                                                                       user.Gender == null ? DBNull.Value : user.Gender,
-                                                                       user.DateOfBirth == null ? DBNull.Value : user.DateOfBirth,
-                                                                       user.Photo == null ? DBNull.Value : user.Photo,
-                                                                       user.Vkontakte == null ? DBNull.Value : user.Vkontakte,
-                                                                       user.Telegram == null ? DBNull.Value : user.Telegram,
-                                                                       user.City == null ? DBNull.Value : user.City});
-                return DataBase.Methods.GetCustom($"Select * from `Пользователи` where `Телефон` = '{user.Phone}'")[0].ToUser();
+                                                                       user.Surname,
+                                                                       user.Name,
+                                                                       user.MiddleName,
+                                                                       user.Email,
+                                                                       user.Phone,
+                                                                       user.Password,
+                                                                       user.Gender,
+                                                                       user.DateOfBirth,
+                                                                       user.Photo,
+                                                                       user.Vkontakte,
+                                                                       user.Telegram,
+                                                                       user.City});
 
+
+
+                List<User> dbUser = Get(phone: user.Phone);
+
+                return dbUser.Count > 0 ? dbUser[0] : null;
             }
         }
 
@@ -90,8 +96,8 @@ namespace Application
         {
             public static List<Activity> Get(List<int>? ids = null) => Generic.Get<Activity>("Направления", ids);
 
-            public static List<Activity> GetByTeacherId(int teacherId) => 
-                DataBase.Methods.GetCustom(@$"SELECT `Направления`.`Id`, `Название`, `Описание`, `Фотография`, `Длительность` 
+            public static List<Activity> GetByTeacherId(int teacherId) =>
+                DataBase.Methods.GetCustom(@$"SELECT `Направления`.`Id`, `Название`, `Описание`, `Фотография`, `Иконка`, `Длительность` 
 FROM `Направления` 
 INNER JOIN `Преподаватели направлений` on `Преподаватели направлений`.`Id направления` = `Направления`.`Id`
 WHERE `Преподаватели направлений`.`Id` = {teacherId}")
@@ -107,7 +113,7 @@ WHERE `Преподаватели направлений`.`Id` = {teacherId}")
 
                 foreach (Teacher teacher in teachers)
                 {
-                    User user = Users.Get(teacher.UserId);
+                    User user = Users.Get(teacher.UserId)[0];
                     List<Activity>? activities = needActivities == true ? Activities.GetByTeacherId(teacher.Id) : null;
 
                     extendedTeachers.Add(new ExtendedTeacher(teacher.Id,
@@ -115,7 +121,6 @@ WHERE `Преподаватели направлений`.`Id` = {teacherId}")
                                                              teacher.Experience,
                                                              teacher.Description,
                                                              user,
-                                                             user.Photo,
                                                              activities));
 
                 }
@@ -196,25 +201,25 @@ WHERE `Id направления` = {activityId}")
 
             public static List<ExtendedTraining> GetExtended(DateTime? start = null, DateTime? end = null)
             {
-                List<Training> trainings = Get(start, end);                
+                List<Training> trainings = Get(start, end);
 
                 return ConvertToExtended(trainings);
             }
 
-            public static List<ExtendedTraining> GetUpcomingExtendedByUserId(int userId)
+            public static List<ExtendedTraining> GetExtendedByUserId(int userId, bool isUpcoming = true)
             {
                 List<Training> trainings = DataBase.Methods.GetCustom($@"SELECT `Занятия`.`Id`, `Id направления`, `Id преподавателя`, `Дата и время`, `Общее кол-во мест`
 FROM `Занятия` 
 Inner join `Записи на занятия` on `Записи на занятия`.`Id занятия` = `Занятия`.`Id`
-WHERE `Записи на занятия`.`Id пользователя` = {userId}
-  And `Дата и время` > '{DateTime.Now.ToDBFormat()}'")
+WHERE `Записи на занятия`.`Id пользователя` = {userId}" + (isUpcoming ? @$"
+  And `Дата и время` > '{DateTime.Now.ToDBFormat()}'" : string.Empty))
                                                            .Select(lo => lo.ToTraining())
                                                            .ToList();
 
                 return ConvertToExtended(trainings);
             }
         }
-    
+
         public static class Appointments
         {
             public static bool Get(int trainingId, int userId) => DataBase.Methods.GetCustom(@$"Select * from `Записи на занятия`
@@ -228,16 +233,84 @@ WHERE `Записи на занятия`.`Id пользователя` = {userId
         {
             public static List<Achievement> GetByUserId(int userId)
             {
-                
-                    List<Achievement> achievements = DataBase.Methods.GetCustom($@"SELECT `Ачивки`.`Id`, `Название`, `Описание`, `Фотография` 
+
+                List<Achievement> achievements = DataBase.Methods.GetCustom($@"SELECT `Ачивки`.`Id`, `Название`, `Описание`, `Фотография` 
 FROM `Ачивки`
 INNER JOIN `Ачивки пользователей` on `Ачивки пользователей`.`Id ачивки` = `Ачивки`.`Id`
 WHERE `Id пользователя` = {userId}")
-                                                                     .Select(lo => lo.ToAchievement())
-                                                                     .ToList();
+                                                                 .Select(lo => lo.ToAchievement())
+                                                                 .ToList();
 
-                    return achievements;
+                return achievements;
             }
+        }
+
+        public static class Reviews
+        {
+            public static List<Review> Get(int teacherId = 0, int userId = 0)
+            {
+                string query = @"SELECT `Id`, `Id преподавателя`, `Id пользователя`, `Текст`, `Оценка` 
+FROM `Отзывы преподавателям`";
+                if (teacherId > 0) query += $@"
+WHERE `Id преподавателя` = {teacherId}" + (userId > 0 ? $" And `Id пользователя` = {userId}" : string.Empty);
+                else if (userId > 0) query += $@"
+WHERE `Id пользователя` = {userId}";
+
+                return DataBase.Methods.GetCustom(query)
+                                       .Select(lo => lo.ToReview())
+                                       .ToList();
+            }
+
+            private static List<ExtendedReview> ConvertToExtended(List<Review> reviews)
+            {
+                List<ExtendedReview> extendedReviews = new();
+
+                foreach (Review review in reviews)
+                {
+                    User user = Users.Get(review.UserId)[0];
+                    Teacher teacher = Teachers.GetExtended(new() { review.TeacherId })[0];
+
+                    extendedReviews.Add(new ExtendedReview(review.Id,
+                                                           review.TeacherId,
+                                                           review.UserId,
+                                                           review.Text,
+                                                           review.Rate,
+                                                           user,
+                                                           teacher));
+                }
+
+                return extendedReviews;
+            }
+
+            public static List<ExtendedReview> GetExtended(int teacherId = 0, int userId = 0)
+            {
+                string query = @"SELECT `Id`, `Id преподавателя`, `Id пользователя`, `Текст`, `Оценка` 
+FROM `Отзывы преподавателям`";
+                if (teacherId > 0) query += $@"
+WHERE `Id преподавателя` = {teacherId}" + (userId > 0 ? $" And `Id пользователя` = {userId}" : string.Empty);
+                else if (userId > 0) query += $@"
+WHERE `Id пользователя` = {userId}";
+
+                List<Review> reviews = DataBase.Methods.GetCustom(query)
+                                                       .Select(lo => lo.ToReview())
+                                                       .ToList();
+
+                return ConvertToExtended(reviews);
+            }
+
+            public static Review? Add(Review review)
+            {
+                DataBase.Methods.Add("Отзывы преподавателям", new object[] { review.TeacherId,
+                                                                             review.UserId,
+                                                                             review.Text,
+                                                                             review.Rate});
+
+                List<Review> dbReview = Get(review.TeacherId, review.UserId);
+
+                return dbReview.Count > 0 ? dbReview[0] : null;
+            }
+
+            public static bool Delete(int teacherId, int userId) => DataBase.Methods.Delete("Отзывы преподавателям", Get(teacherId, userId)[0].Id);
         }
     }
 }

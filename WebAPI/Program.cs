@@ -63,12 +63,12 @@ app.MapGet(middlewareUsersPath + "/{userString}", (string userString) =>
         try 
         { 
             User user = JsonConvert.DeserializeObject<User>(userString);
-            dbUser = Users.Get(user.Id, user.Phone, user.Password);
+            dbUser = Users.Get(user.Id, user.Phone, user.Password)[0];
         }
         catch
         {
             int userId = Convert.ToInt32(userString);
-            dbUser = Users.Get(userId);
+            dbUser = Users.Get(userId)[0];
         }
 
         if (dbUser == null) throw new Exception("User not exists.");
@@ -147,6 +147,30 @@ app.MapGet(middlewareTeachersPath + "/main", () =>
     }
 });
 
+app.MapGet(middlewareTeachersPath + "/extended", () =>
+{
+    try
+    {
+        return Results.Json(Teachers.GetExtended(needActivities: true));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapGet(middlewareTeachersPath + "/extended/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Teachers.GetExtended(new() { id })[0]);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 app.MapGet(middlewareTeachersPath + "/activity/{id}", (int id) =>
 {
     try
@@ -191,11 +215,11 @@ app.MapGet(middlewareTrainingsPath + "/monthly/{date}", (DateTime date) =>
     }
 });
 
-app.MapGet(middlewareTrainingsPath + "/users/{userId}", (int userId) =>
+app.MapGet(middlewareTrainingsPath + "/users/{userId}", (int userId, bool isUpcoming) =>
 {
     try
     {
-        return Results.Json(Trainings.GetUpcomingExtendedByUserId(userId));
+        return Results.Json(Trainings.GetExtendedByUserId(userId, isUpcoming));
     }
     catch (Exception ex)
     {
@@ -230,6 +254,42 @@ app.MapGet(middlewareAchievementsPath + "/users/{userId}", (int userId) =>
     try
     {
         return Results.Json(Achievements.GetByUserId(userId));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+//Review middleware
+string middlewareReviewsPath = "/api/reviews";
+
+app.MapGet(middlewareReviewsPath + "/teacher/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Reviews.GetExtended(teacherId: id)[0]);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPost(middlewareReviewsPath + "/{reviewString}", (string reviewString) =>
+{
+    try
+    {
+        Review? review = JsonConvert.DeserializeObject<Review>(reviewString);
+
+        if (Reviews.Get(review.TeacherId, review.UserId).Count > 0)
+        {
+            review = Reviews.Add(review);
+            if (review != null) Reviews.Delete(review.TeacherId, review.UserId); //Если успешно добавили новый отзыв - удалить старый
+        }
+        else review = Reviews.Add(review);
+
+        return Results.Json(review);
     }
     catch (Exception ex)
     {

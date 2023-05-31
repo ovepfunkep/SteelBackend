@@ -16,8 +16,12 @@
     <button id="buttonGetAllActivities">GetAllActivities</button>
     <button id="buttonGetCertainActivity">GetCertainActivity</button>
     <button id="buttonGetCertainActivityTeachers">GetCertainActivityTeachers</button>
-    <button id="buttonGetUpcomingUserTrainings">GetUpcomingUserTrainings</button>
+    <button id="buttonGetUpcomingUserTrainingsExtended">GetUpcomingUserTrainingsExtended</button>
     <button id="buttonGetUsersAchievments">GetUsersAchievments</button>
+    <button id="buttonGetTeachersExtended">GetTeachersExtended</button>
+    <button id="buttonGetTeacherExtended">GetTeacherExtended</button>
+    <button id="buttonGetReview">GetReview</button>
+    <button id="buttonPostReview">PostReview</button>
     <button id="buttonUpdateUser">UpdateUser</button>
     <button id="buttonGetUsers">GetUsers</button>
     <script>
@@ -206,9 +210,9 @@
             }
         });
         
-        document.getElementById("buttonGetUpcomingUserTrainings").addEventListener("click", async () => {
+        document.getElementById("buttonGetUpcomingUserTrainingsExtended").addEventListener("click", async () => {
             try {
-                const response = await fetch("/api/trainings/users/15");
+                const response = await fetch("/api/trainings/users/15?isUpcoming=true");
 
                 if (response.ok === true) {
                     const data = await response.json();
@@ -225,6 +229,77 @@
         document.getElementById("buttonGetUsersAchievments").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/achievements/users/15");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetTeachersExtended").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/teachers/extended");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetTeacherExtended").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/teachers/extended/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetReview").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/reviews/teacher/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonPostReview").addEventListener("click", async () => {
+            try {
+                const review = {
+                    TeacherId: "1",
+                    UserId: "20",
+                    Text: "Препод топ",
+                    Rate: "20"
+                }
+                const reviewString = JSON.stringify(review);
+                const response = await fetch(`/api/reviews/${reviewString}`, { method: "POST" });
 
                 if (response.ok === true) {
                     const data = await response.json();

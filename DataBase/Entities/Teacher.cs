@@ -8,12 +8,12 @@ namespace DataBase.Entities
 {
     public class Teacher
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public float? Experience { get; set; }
-        public string? Description { get; set; }
+        public int Id { get; set; } 
+        public int UserId { get; set; } 
+        public float Experience { get; set; } 
+        public string Description { get; set; }
 
-        public Teacher(int id, int userId, float? expirience, string? description)
+        public Teacher(int id = default, int userId = default, float expirience = default, string description = default)
         {
             Id = id;
             UserId = userId;
