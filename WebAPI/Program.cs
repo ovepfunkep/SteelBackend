@@ -120,18 +120,6 @@ app.MapGet(middlewareActivitiesPath, () =>
     }
 });
 
-app.MapGet(middlewareActivitiesPath + "/main", () =>
-{
-    try
-    {
-        return Results.Json(Activities.Get(new List<int>() { 1 }));
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem(title: ex.Message);
-    }
-});
-
 app.MapGet(middlewareActivitiesPath + "/{id}", (int id) =>
 {
     try
@@ -188,18 +176,6 @@ app.MapDelete(middlewareActivitiesPath + "/{id}", (int id) =>
 //Teachers middleware
 string middlewareTeachersPath = "/api/teachers";
 
-app.MapGet(middlewareTeachersPath + "/main", () =>
-{
-    try
-    {
-        return Results.Json(Teachers.GetExtended(new List<int>() { 1 }, true));
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem(title: ex.Message);
-    }
-});
-
 app.MapGet(middlewareTeachersPath + "/extended", () =>
 {
     try
@@ -238,18 +214,6 @@ app.MapGet(middlewareTeachersPath + "/activity/{id}", (int id) =>
 
 //News middleware
 string middlewareNewsPath = "/api/news";
-
-app.MapGet(middlewareNewsPath + "/main", () =>
-{
-    try
-    {
-        return Results.Json(Application.Methods.News.Get(new List<int>() { 1 }));
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem(title: ex.Message);
-    }
-});
 
 app.MapGet(middlewareNewsPath, () =>
 {
