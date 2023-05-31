@@ -5,16 +5,10 @@
     <title>Testing frontend</title>
 </head>
 <body>
-    <button id="buttonAddUser">AddUser</button>
-    <button id="buttonGetUserByData">GetUserByData</button>
-    <button id="buttonGetUserById">GetUserById</button>
-    <button id="buttonGetMainActivities">GetMainActivities</button>
     <button id="buttonGetMainTeachers">GetMainTeachers</button>
     <button id="buttonGetMainNews">GetMainNews</button>
     <button id="buttonGetMonthTrainings">GetMonthTrainings</button>
     <button id="buttonPostAppointment">PostAppointment</button>
-    <button id="buttonGetAllActivities">GetAllActivities</button>
-    <button id="buttonGetCertainActivity">GetCertainActivity</button>
     <button id="buttonGetCertainActivityTeachers">GetCertainActivityTeachers</button>
     <button id="buttonGetUpcomingUserTrainingsExtended">GetUpcomingUserTrainingsExtended</button>
     <button id="buttonGetUsersAchievments">GetUsersAchievments</button>
@@ -22,27 +16,24 @@
     <button id="buttonGetTeacherExtended">GetTeacherExtended</button>
     <button id="buttonGetReview">GetReview</button>
     <button id="buttonPostReview">PostReview</button>
-    <button id="buttonUpdateUser">UpdateUser</button>
+    <button id="buttonGetAchievements">GetAchievements</button>
+    <button id="buttonGetNews">GetNews</button>
+    <button id="buttonGetOneNews">GetOneNews</button>
+    <br />
+    <button id="buttonGetUserByData">GetUserByData</button>
+    <button id="buttonGetUserById">GetUserById</button>
     <button id="buttonGetUsers">GetUsers</button>
+    <button id="buttonAddUser">AddUser</button>
+    <button id="buttonUpdateUser">UpdateUser</button>
+    <button id="buttonDeleteUser">DeleteUser</button>
+    <br />
+    <button id="buttonGetAllActivities">GetAllActivities</button>
+    <button id="buttonGetMainActivities">GetMainActivities</button>
+    <button id="buttonGetCertainActivity">GetCertainActivity</button>
+    <button id="buttonAddActivity">AddActivity</button>
+    <button id="buttonUpdateActivity">UpdateActivity</button>
+    <button id="buttonDeleteActivity">DeleteActivity</button>
     <script>
-        document.getElementById("buttonAddUser").addEventListener("click", async () => {
-            try {
-                const user = { Phone: "1", Password: "1"}
-                const userString = encodeURIComponent(JSON.stringify(user));
-                const response = await fetch(`/api/users/${userString}`, { method: "POST" });
-
-                if (response.ok === true) {
-                    const user = await response.json();
-                    console.log(user);
-                } else {
-                    const error = await response.json();
-                    console.log(error.message);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-
         document.getElementById("buttonGetUserByData").addEventListener("click", async () => {
             try {
                 const user = { Phone: "1" }
@@ -77,6 +68,94 @@
             }
         });
 
+        document.getElementById("buttonGetUsers").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/users");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonAddUser").addEventListener("click", async () => {
+            try {
+                const user = { Phone: "Pupsich", Password: "1" }
+                const userString = encodeURIComponent(JSON.stringify(user));
+                const response = await fetch(`/api/users/${userString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const user = await response.json();
+                    console.log(user);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonUpdateUser").addEventListener("click", async () => {
+            try {
+                const user = {
+                    id: 22,
+                    name: "Pupsich1"
+                }
+                const userString = JSON.stringify(user);
+                const response = await fetch(`/api/users/${userString}`, { method: "PUT" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonDeleteUser").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/users/22`, { method: "Delete" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+
+        document.getElementById("buttonGetAllActivities").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/activities");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
         document.getElementById("buttonGetMainActivities").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/activities/main");
@@ -92,6 +171,78 @@
                 console.log(error);
             }
         });
+
+        document.getElementById("buttonGetCertainActivity").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/activities/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonAddActivity").addEventListener("click", async () => {
+            try {
+                const activity = { name: "Футбол" }
+                const activityString = encodeURIComponent(JSON.stringify(activity));
+                const response = await fetch(`/api/activities/${activityString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const user = await response.json();
+                    console.log(user);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonUpdateActivity").addEventListener("click", async () => {
+            try {
+                const activity = {
+                    id: 2,
+                    name: "Pupsich1"
+                }
+                const activityString = JSON.stringify(activity);
+                const response = await fetch(`/api/activities/${activityString}`, { method: "PUT" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonDeleteActivity").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/activity/2`, { method: "Delete" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
 
         document.getElementById("buttonGetMainTeachers").addEventListener("click", async () => {
             try {
@@ -162,38 +313,8 @@
             }
         });
 
-        document.getElementById("buttonGetAllActivities").addEventListener("click", async () => {
-            try {
-                const response = await fetch("/api/activities");
 
-                if (response.ok === true) {
-                    const data = await response.json();
-                    console.log(data);
-                } else {
-                    const error = await response.json();
-                    console.log(error.message);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-        
-        document.getElementById("buttonGetCertainActivity").addEventListener("click", async () => {
-            try {
-                const response = await fetch("/api/activities/1");
 
-                if (response.ok === true) {
-                    const data = await response.json();
-                    console.log(data);
-                } else {
-                    const error = await response.json();
-                    console.log(error.message);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-        
         document.getElementById("buttonGetCertainActivityTeachers").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/teachers/activity/1");
@@ -209,7 +330,7 @@
                 console.log(error);
             }
         });
-        
+
         document.getElementById("buttonGetUpcomingUserTrainingsExtended").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/trainings/users/15?isUpcoming=true");
@@ -225,7 +346,7 @@
                 console.log(error);
             }
         });
-        
+
         document.getElementById("buttonGetUsersAchievments").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/achievements/users/15");
@@ -241,7 +362,7 @@
                 console.log(error);
             }
         });
-        
+
         document.getElementById("buttonGetTeachersExtended").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/teachers/extended");
@@ -257,7 +378,7 @@
                 console.log(error);
             }
         });
-        
+
         document.getElementById("buttonGetTeacherExtended").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/teachers/extended/1");
@@ -273,7 +394,7 @@
                 console.log(error);
             }
         });
-        
+
         document.getElementById("buttonGetReview").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/reviews/teacher/1");
@@ -312,15 +433,10 @@
                 console.log(error);
             }
         });
-        
-        document.getElementById("buttonUpdateUser").addEventListener("click", async () => {
+
+        document.getElementById("buttonGetAchievements").addEventListener("click", async () => {
             try {
-                const user = {
-                    id: 20,
-                    name: "Vanya"
-                }
-                const userString = JSON.stringify(user);
-                const response = await fetch(`/api/users/${userString}`, {method: "PUT"});
+                const response = await fetch("/api/achievements");
 
                 if (response.ok === true) {
                     const data = await response.json();
@@ -334,9 +450,9 @@
             }
         });
 
-        document.getElementById("buttonGetUsers").addEventListener("click", async () => {
+        document.getElementById("buttonGetNews").addEventListener("click", async () => {
             try {
-                const response = await fetch("/api/users");
+                const response = await fetch("/api/news");
 
                 if (response.ok === true) {
                     const data = await response.json();
@@ -349,6 +465,25 @@
                 console.log(error);
             }
         });
+
+        document.getElementById("buttonGetOneNews").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/news/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+
+
 
     </script>
 </body>

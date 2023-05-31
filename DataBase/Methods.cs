@@ -95,6 +95,7 @@ namespace DataBase
                 mySqlCommand.CommandText = mySqlCommand.CommandText[..^2] + ")";
 
                 mySqlCommand.ExecuteNonQuery();
+
                 CloseConnection();
                 return true;
             }

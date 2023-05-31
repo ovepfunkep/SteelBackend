@@ -29,7 +29,7 @@ app.MapPost(middlewareUsersPath + "/{userString}", (string userString) =>
 {
     try
     {
-        User tempUser = JsonConvert.DeserializeObject<User>(userString);
+        User tempUser = JsonConvert.DeserializeObject<User>(userString)!;
         if (Users.Get(phone: tempUser.Phone) != null) throw new Exception("User already exists.");
         User newUser = Users.Add(tempUser);
         return Results.Json(newUser);
@@ -44,7 +44,7 @@ app.MapPut(middlewareUsersPath + "/{userString}", (string userString) =>
 {
     try
     {
-        User user = JsonConvert.DeserializeObject<User>(userString);
+        User user = JsonConvert.DeserializeObject<User>(userString)!;
 
         return Results.Json(Users.Update(user));
     }
@@ -62,13 +62,13 @@ app.MapGet(middlewareUsersPath + "/{userString}", (string userString) =>
 
         try 
         { 
-            User user = JsonConvert.DeserializeObject<User>(userString);
-            dbUser = Users.Get(user.Id, user.Phone, user.Password)[0];
+            User user = JsonConvert.DeserializeObject<User>(userString)!;
+            dbUser = Users.Get(user.Id, user.Phone, user.Password);
         }
         catch
         {
             int userId = Convert.ToInt32(userString);
-            dbUser = Users.Get(userId)[0];
+            dbUser = Users.Get(userId);
         }
 
         if (dbUser == null) throw new Exception("User not exists.");
@@ -93,6 +93,18 @@ app.MapGet(middlewareUsersPath, () =>
     }
 });
 
+app.MapDelete(middlewareUsersPath + "/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Users.Delete(id));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 //Activities middleware
 string middlewareActivitiesPath = "/api/activities";
 
@@ -101,6 +113,18 @@ app.MapGet(middlewareActivitiesPath, () =>
     try
     {
         return Results.Json(Activities.Get());
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapGet(middlewareActivitiesPath + "/main", () =>
+{
+    try
+    {
+        return Results.Json(Activities.Get(new List<int>() { 1 }));
     }
     catch (Exception ex)
     {
@@ -120,11 +144,40 @@ app.MapGet(middlewareActivitiesPath + "/{id}", (int id) =>
     }
 });
 
-app.MapGet(middlewareActivitiesPath + "/main", () =>
+app.MapPost(middlewareActivitiesPath + "/{activityString}", (string activityString) =>
 {
     try
     {
-        return Results.Json(Activities.Get(new List<int>() { 1 }));
+        Activity tempActivity = JsonConvert.DeserializeObject<Activity>(activityString)!;
+        if (Activities.Get(tempActivity.Name) != null) throw new Exception("Activity already exists.");
+        Activity newActivity = Activities.Add(tempActivity);
+        return Results.Json(newActivity);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPut(middlewareActivitiesPath + "/{activityString}", (string activityString) =>
+{
+    try
+    {
+        Activity activity = JsonConvert.DeserializeObject<Activity>(activityString)!;
+
+        return Results.Json(Activities.Update(activity));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapDelete(middlewareActivitiesPath + "/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Activities.Delete(id));
     }
     catch (Exception ex)
     {
@@ -198,6 +251,30 @@ app.MapGet(middlewareNewsPath + "/main", () =>
     }
 });
 
+app.MapGet(middlewareNewsPath, () =>
+{
+    try
+    {
+        return Results.Json(Application.Methods.News.Get());
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapGet(middlewareNewsPath + "/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Application.Methods.News.Get(new List<int>() { id })[0]);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 //Trainings middleware
 string middlewareTrainingsPath = "/api/trainings";
 
@@ -234,8 +311,9 @@ app.MapPost(middlewareAppointmentsPath + "/{appointmentString}", (string appoint
 {
     try
     {
-        Appointment appointment = JsonConvert.DeserializeObject<Appointment>(appointmentString);
-        if (Appointments.Get(appointment.TrainingId, appointment.UserId))
+        Appointment appointment = JsonConvert.DeserializeObject<Appointment>(appointmentString)!;
+        Appointment? dbAppointment = Appointments.Get(appointment.TrainingId, appointment.UserId);
+        if (dbAppointment != null)
             throw new Exception("User already signed up!");
 
         return Results.Json(Appointments.Add(appointment.TrainingId, appointment.UserId));
@@ -254,6 +332,18 @@ app.MapGet(middlewareAchievementsPath + "/users/{userId}", (int userId) =>
     try
     {
         return Results.Json(Achievements.GetByUserId(userId));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapGet(middlewareAchievementsPath, () =>
+{
+    try
+    {
+        return Results.Json(Achievements.Get());
     }
     catch (Exception ex)
     {
@@ -280,12 +370,12 @@ app.MapPost(middlewareReviewsPath + "/{reviewString}", (string reviewString) =>
 {
     try
     {
-        Review? review = JsonConvert.DeserializeObject<Review>(reviewString);
+        Review? review = JsonConvert.DeserializeObject<Review>(reviewString)!;
 
-        if (Reviews.Get(review.TeacherId, review.UserId).Count > 0)
+        if (Reviews.Get(review.TeacherId, review.UserId) != null)
         {
+            Reviews.Delete(review.TeacherId, review.UserId);
             review = Reviews.Add(review);
-            if (review != null) Reviews.Delete(review.TeacherId, review.UserId); //Если успешно добавили новый отзыв - удалить старый
         }
         else review = Reviews.Add(review);
 

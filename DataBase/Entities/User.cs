@@ -17,7 +17,7 @@
         public string Telegram { get; set; }
         public string City { get; set; }
 
-        private static int UserRoleId = Convert.ToInt32(Methods.GetCustom("Select * from `Роли` where `Название` = 'Клиент'")![default][default]);
+        private static int UserRoleId = Convert.ToInt32(Methods.GetCustom("Select * from `Роли` where `Название` = 'Клиент'")![0][0]);
 
         public User(int id = default, 
                     int roleId = default,

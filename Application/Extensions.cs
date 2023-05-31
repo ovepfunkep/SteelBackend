@@ -63,6 +63,10 @@ namespace Application
                                                                                list[2].ToStr(),
                                                                                list[3].ToStr());
         
+        public static Appointment ToAppointment(this List<object> list) => new(list[0].ToInt(),
+                                                                               list[1].ToInt(),
+                                                                               list[2].ToInt());
+        
         public static Review ToReview(this List<object> list) => new(list[0].ToInt(),
                                                                      list[1].ToInt(),
                                                                      list[2].ToInt(),
