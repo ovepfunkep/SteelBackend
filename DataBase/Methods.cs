@@ -23,7 +23,7 @@ namespace DataBase
 
         public static void CloseConnection()
         {
-            if (IsConnected) 
+            if (IsConnected)
             {
                 Connection.Close();
                 IsConnected = false;
@@ -117,15 +117,19 @@ namespace DataBase
             try
             {
                 OpenConnection();
-                MySqlCommand mySqlCommand = new($"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tableName}'", Connection);
+                MySqlCommand mySqlCommand = new($"DESCRIBE {tableName};", Connection);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
                 string newQuery = $"Update {tableName} Set ";
-                for (int i = 0; i < dataValues.Length; i++)
+                mySqlDataReader.Read();
+                for (int i = 1; i < dataValues.Length; i++)
                 {
                     mySqlDataReader.Read();
-                    newQuery += $"{mySqlDataReader[0]}=@value{i}, ";
-                    mySqlCommand.Parameters.AddWithValue($"value{i}", dataValues[i]);
+                    if (dataValues[i] != default)
+                    {
+                        newQuery += $"`{mySqlDataReader[0]}`=@value{i}, ";
+                        mySqlCommand.Parameters.AddWithValue($"value{i}", dataValues[i]);
+                    }
                 }
                 mySqlDataReader.Close();
                 mySqlCommand.CommandText = newQuery[..^2] + " Where Id = @id";
@@ -135,7 +139,7 @@ namespace DataBase
                 CloseConnection();
                 return true;
             }
-            catch 
+            catch
             {
                 CloseConnection();
                 return false;
@@ -166,7 +170,7 @@ namespace DataBase
                 CloseConnection();
                 return true;
             }
-            catch 
+            catch
             {
                 CloseConnection();
                 return false;
