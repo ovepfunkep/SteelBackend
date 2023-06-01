@@ -71,7 +71,7 @@ namespace DataBase
         /// </summary>
         /// <param name="tableName">Название таблицы</param>
         /// <returns>Список записей, состоящие из списка объектов данных</returns>
-        public static List<List<object>> Get(string tableName) => GetCustom($"Select * from {tableName}");
+        public static List<List<object>> Get(string tableName) => GetCustom($"Select * from `{tableName}`");
 
         /// <summary>
         /// Добавить запись в конкретную таблицу
@@ -86,11 +86,11 @@ namespace DataBase
                 OpenConnection();
                 MySqlCommand mySqlCommand = new($"Insert into `{tableName}` values (NULL, ", Connection);
 
-                int countParams = 0;
+                int countParams = -1;
                 foreach (object? value in dataValues)
                 {
-                    mySqlCommand.CommandText += $"@value{countParams}, ";
-                    mySqlCommand.Parameters.AddWithValue($"value{countParams}", dataValues[countParams++] ?? DBNull.Value);
+                    mySqlCommand.CommandText += $"@value{++countParams}, ";
+                    mySqlCommand.Parameters.AddWithValue($"value{countParams}", IsValidValue(dataValues[countParams]) ? dataValues[countParams] : DBNull.Value);
                 }
                 mySqlCommand.CommandText = mySqlCommand.CommandText[..^2] + ")";
 
@@ -117,15 +117,15 @@ namespace DataBase
             try
             {
                 OpenConnection();
-                MySqlCommand mySqlCommand = new($"DESCRIBE {tableName};", Connection);
+                MySqlCommand mySqlCommand = new($"DESCRIBE `{tableName}`;", Connection);
                 MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 
-                string newQuery = $"Update {tableName} Set ";
+                string newQuery = $"Update `{tableName}` Set ";
                 mySqlDataReader.Read();
                 for (int i = 1; i < dataValues.Length; i++)
                 {
                     mySqlDataReader.Read();
-                    if (dataValues[i] != default)
+                    if (IsValidValue(dataValues[i]))
                     {
                         newQuery += $"`{mySqlDataReader[0]}`=@value{i}, ";
                         mySqlCommand.Parameters.AddWithValue($"value{i}", dataValues[i]);
@@ -146,13 +146,30 @@ namespace DataBase
             }
         }
 
+        private static bool IsValidValue(object? value)
+        {
+            if (value == null)
+                return false;
+
+            if (value is string strValue && string.IsNullOrEmpty(strValue))
+                return false;
+
+            if (value is int intValue && intValue == 0)
+                return false;
+
+            if (value is DateTime dateTimeValue && dateTimeValue == DateTime.MinValue)
+                return false;
+
+            return true;
+        }
+
         /// <summary>
         /// Удалить конкретную запись из конкретной таблицы
         /// </summary>
         /// <param name="tableName">Название таблицы</param>
         /// <param name="id">Id записи</param>
         /// <returns>Истину, если получилось. Иначе ложь</returns>
-        public static bool Delete(string tableName, int id) => ExecuteCustomQuery($"Delete from {tableName} WHERE Id = {id}");
+        public static bool Delete(string tableName, int id) => ExecuteCustomQuery($"Delete from `{tableName}` WHERE Id = {id}");
 
         /// <summary>
         /// Выполнить запрос в базу данных

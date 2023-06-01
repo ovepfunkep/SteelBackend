@@ -9,7 +9,7 @@ namespace DataBase.Entities.Extended
     public class ExtendedTraining : Training
     {
         public Activity Activity { get; set; }
-        public Teacher Teacher { get; set; }
+        public ExtendedTeacher ExtendedTeacher { get; set; }
         public DateTime DateTimeEnd { get; set; } 
         public int LeftSeats { get; set; } 
 
@@ -19,12 +19,12 @@ namespace DataBase.Entities.Extended
                                 DateTime dateTimeStart, 
                                 int totalSeats,
                                 Activity activity, 
-                                Teacher teacher, 
+                                ExtendedTeacher teacher, 
                                 DateTime dateTimeEnd, 
                                 int leftSeats) : base(id, activityId, teacherId, dateTimeStart, totalSeats)
         {
             Activity = activity;
-            Teacher = teacher;
+            ExtendedTeacher = teacher;
             DateTimeEnd = dateTimeEnd;
             LeftSeats = leftSeats;
         }

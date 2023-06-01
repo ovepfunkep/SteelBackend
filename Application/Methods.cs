@@ -14,7 +14,7 @@ namespace Application
                 {
                     foreach (int id in ids)
                     {
-                        try { result.Add(DataBase.Methods.GetCustom($"Select * from {tableName} where `Id` = {id}")[0].ToClassInstance<T>()); }
+                        try { result.Add(DataBase.Methods.GetCustom($"Select * from `{tableName}` where `Id` = {id}")[0].ToClassInstance<T>()); }
                         catch { }
                     }
                     return result;
@@ -195,9 +195,9 @@ WHERE `Id направления` = {activityId}")
 
             public static Teacher Add(Teacher teacher)
             {
-                DataBase.Methods.Add("Направления", new object[] { teacher.UserId,
-                                                                   teacher.Experience,
-                                                                   teacher.Description});
+                DataBase.Methods.Add("Преподаватели", new object[] { teacher.UserId,
+                                                                     teacher.Experience,
+                                                                     teacher.Description});
 
                 return Get(teacher.UserId);
             }
@@ -262,7 +262,7 @@ where `Название` = '{name}'").Select(lo => lo.ToNews()).ToList();
                 foreach (Training training in trainings)
                 {
                     Activity trainingActivity = Activities.Get(new List<int>() { training.ActivityId })[0];
-                    Teacher trainingTeacher = Teachers.GetExtended(new() { training.TeacherId })[0];
+                    ExtendedTeacher trainingTeacher = Teachers.GetExtended(new() { training.TeacherId })[0];
 
                     extendedTrainings.Add(new ExtendedTraining(training.Id,
                                                                training.ActivityId,
@@ -291,7 +291,7 @@ and `Дата и время` = '{starts.ToDBFormat()}'").Select(lo => lo.ToTrain
                 return result.Count > 0 ? result[0] : null;
             }
 
-            public static List<Training> Get(DateTime? start = null, DateTime? end = null)
+            public static List<Training> GetByDate(DateTime? start = null, DateTime? end = null)
             {
                 List<List<object>> values;
 
@@ -312,7 +312,7 @@ and `Дата и время` = '{starts.ToDBFormat()}'").Select(lo => lo.ToTrain
 
             public static List<ExtendedTraining> GetExtended(DateTime? start = null, DateTime? end = null)
             {
-                List<Training> trainings = Get(start, end);
+                List<Training> trainings = GetByDate(start, end);
 
                 return ConvertToExtended(trainings);
             }
@@ -368,11 +368,12 @@ and `Id пользователя` = {userId}").Select(lo => lo.ToAppointment()).
 
             public static List<Appointment> Get(List<int>? ids = null) => Generic.Get<Appointment>("Записи на занятия", ids);
 
-            public static Appointment Add(int trainingId, int userId)
+            public static Appointment Add(Appointment appointment)
             {
-                DataBase.Methods.Add("Записи на занятия", new object[] { trainingId, userId });
+                DataBase.Methods.Add("Записи на занятия", new object[] { appointment.TrainingId, 
+                                                                         appointment.UserId });
 
-                return Get(trainingId, userId);
+                return Get(appointment.TrainingId, appointment.UserId);
             }
 
             public static Appointment Update(Appointment appointment)
@@ -381,7 +382,7 @@ and `Id пользователя` = {userId}").Select(lo => lo.ToAppointment()).
                                                                             appointment.TrainingId,
                                                                             appointment.UserId});
 
-                return Get(new List<int>() { appointment.Id })[0];
+                return Get(appointment.TrainingId, appointment.UserId);
             }
 
             public static bool Delete(int id) => DataBase.Methods.Delete("Записи на занятия", id);
@@ -415,7 +416,7 @@ where `Название` = '{name}'").Select(lo => lo.ToAchievement()).ToList();
 
             public static Achievement Add(Achievement achievement)
             {
-                DataBase.Methods.Add("Направления", new object[] { achievement.Name,
+                DataBase.Methods.Add("Ачивки", new object[] { achievement.Name,
                                                                    achievement.Description,
                                                                    achievement.Photo});
 
@@ -424,12 +425,12 @@ where `Название` = '{name}'").Select(lo => lo.ToAchievement()).ToList();
 
             public static Achievement Update(Achievement achievement)
             {
-                DataBase.Methods.Update("Занятия", new object[] { achievement.Id,
+                DataBase.Methods.Update("Ачивки", new object[] { achievement.Id,
                                                                   achievement.Name,
                                                                   achievement.Description,
                                                                   achievement.Photo});
 
-                return Get(new List<int>() { achievement.Id })[0];
+                return Get(achievement.Name);
             }
 
             public static bool Delete(int id) => DataBase.Methods.Delete("Ачивки", id);
@@ -437,16 +438,14 @@ where `Название` = '{name}'").Select(lo => lo.ToAchievement()).ToList();
 
         public static class Reviews
         {
-            public static Review? Get(int teacherId = 0, int userId = 0)
+            public static Review? Get(int teacherId, int userId)
             {
-                string query = @"SELECT `Id`, `Id преподавателя`, `Id пользователя`, `Текст`, `Оценка` 
-FROM `Отзывы преподавателям`";
-                if (teacherId > 0) query += $@"
-WHERE `Id преподавателя` = {teacherId}" + (userId > 0 ? $" And `Id пользователя` = {userId}" : string.Empty);
-                else if (userId > 0) query += $@"
-WHERE `Id пользователя` = {userId}";
-
-                List<Review> result = DataBase.Methods.GetCustom(query).Select(lo => lo.ToReview()).ToList();
+                List<Review> result = DataBase.Methods.GetCustom($@"SELECT `Id`, `Id преподавателя`, `Id пользователя`, `Текст`, `Оценка` 
+FROM `Отзывы преподавателям`
+WHERE `Id преподавателя` = {teacherId}
+ And `Id пользователя` = {userId}")
+                                                      .Select(lo => lo.ToReview())
+                                                      .ToList();
 
                 return result.Count > 0 ? result[0] : null;
             }
@@ -511,8 +510,7 @@ WHERE `Id пользователя` = {userId}";
                 return Get(new List<int>() { review.Id })[0];
             }
 
-            public static bool Delete(int teacherId, int userId) =>
-                DataBase.Methods.Delete("Отзывы преподавателям", Get(teacherId, userId).Id);
+            public static bool Delete(int id) => DataBase.Methods.Delete("Отзывы преподавателям", id);
         }
     }
 }
