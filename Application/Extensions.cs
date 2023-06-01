@@ -14,6 +14,7 @@ namespace Application
                 nameof(News) => (T)(object)list.ToNews(),
                 nameof(Training) => (T)(object)list.ToTraining(),
                 nameof(Achievement) => (T)(object)list.ToAchievement(),
+                nameof(Appointment) => (T)(object)list.ToAppointment(),
                 nameof(Review) => (T)(object)list.ToReview(),
                 _ => throw new ArgumentException($"There's now such class as {typeof(T).Name}")
             };
