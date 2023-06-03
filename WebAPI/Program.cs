@@ -188,6 +188,18 @@ app.MapGet(middlewareTeachersPath + "/extended", () =>
     }
 });
 
+app.MapGet(middlewareTeachersPath + "/extended/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Teachers.GetExtended(new() { id }, needActivities: true)[0]);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 app.MapGet(middlewareTeachersPath + "/activity/{id}", (int id) =>
 {
     try

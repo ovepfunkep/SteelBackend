@@ -287,6 +287,22 @@
                 console.log(error);
             }
         });
+        
+        document.getElementById("buttonGetTeacherExtended").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/teachers/extended/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
 
         document.getElementById("buttonAddTeacher").addEventListener("click", async () => {
             try {
