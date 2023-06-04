@@ -4,7 +4,7 @@ namespace DataBase
 {
     public class Methods
     {
-        static MySqlConnection Connection = new("server=127.0.0.1;uid=root;pwd=8P9h1p3m4y7a4d9m5i1n5!;database=steelDataBase");
+        static MySqlConnection Connection = new("server=127.0.0.1;uid=root;pwd=123123123!;database=steelDataBase");
 
         static bool IsConnected { get; set; } = false;
 
