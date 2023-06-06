@@ -368,6 +368,37 @@ and `Id пользователя` = {userId}").Select(lo => lo.ToAppointment()).
 
             public static List<Appointment> Get(List<int>? ids = null) => Generic.Get<Appointment>("Записи на занятия", ids);
 
+            public static List<Appointment> Get(int trainingId) => DataBase.Methods.GetCustom($@"Select * 
+from `Записи на занятия`
+where `Id занятия` = '{trainingId}'").Select(lo => lo.ToAppointment()).ToList();
+
+            static List<ExtendedAppointment> ConvertToExtended(List<Appointment> appointments)
+            {
+                List<ExtendedAppointment> extendedAppointments = new();
+
+                foreach (Appointment appointment in appointments)
+                {
+                    User user = Users.Get(appointment.UserId);
+                    Training training = Trainings.Get(new() { appointment.TrainingId })[0];
+
+                    extendedAppointments.Add(new ExtendedAppointment(appointment.Id,
+                                                                     appointment.TrainingId, 
+                                                                     appointment.UserId, 
+                                                                     user, 
+                                                                     training));
+
+                }
+
+                return extendedAppointments;
+            }
+
+            public static List<ExtendedAppointment> GetExtended(int trainingId)
+            {
+                List<Appointment> appointments = Get(trainingId);
+
+                return ConvertToExtended(appointments);
+            }
+
             public static Appointment Add(Appointment appointment)
             {
                 DataBase.Methods.Add("Записи на занятия", new object[] { appointment.TrainingId, 
@@ -468,6 +499,74 @@ where `Название` = '{name}'").Select(lo => lo.ToAchievement()).ToList();
             }
 
             public static bool Delete(int id) => DataBase.Methods.Delete("Ачивки", id);
+        }
+        
+        public static class UsersAchievements
+        {
+            public static UserAchievements? Get(int userId, int achievementId)
+            {
+                List<UserAchievements> result = DataBase.Methods.GetCustom($@"Select * 
+from `Ачивки пользователей`
+where `Id пользователя` = '{userId}'
+and `Id ачивки` = {achievementId}").Select(lo => lo.ToUserAchievements()).ToList();
+
+                return result.Count > 0 ? result[0] : null;
+            }
+
+            public static List<UserAchievements> Get(List<int>? ids = null) => Generic.Get<UserAchievements>("Ачивки пользователей", ids);
+
+            public static UserAchievements Add(UserAchievements userAchievements)
+            {
+                DataBase.Methods.Add("Ачивки пользователей", new object[] { userAchievements.UserId,
+                                                                            userAchievements.AchievementId});
+
+                return Get(userAchievements.UserId, userAchievements.AchievementId);
+            }
+
+            public static UserAchievements Update(UserAchievements userAchievements)
+            {
+                DataBase.Methods.Update("Ачивки пользователей", new object[] { userAchievements.Id,
+                                                                               userAchievements.UserId,
+                                                                               userAchievements.AchievementId});
+
+                return Get(userAchievements.UserId, userAchievements.AchievementId);
+            }
+
+            public static bool Delete(int id) => DataBase.Methods.Delete("Ачивки пользователей", id);
+        }
+        
+        public static class ActivitiesTeachers
+        {
+            public static ActivityTeacher? Get(int activityId, int teacherId)
+            {
+                List<ActivityTeacher> result = DataBase.Methods.GetCustom($@"Select * 
+from `Преподаватели направлений`
+where `Id направления` = '{activityId}'
+and `Id преподавателя` = {teacherId}").Select(lo => lo.ToActivityTeacher()).ToList();
+
+                return result.Count > 0 ? result[0] : null;
+            }
+
+            public static List<ActivityTeacher> Get(List<int>? ids = null) => Generic.Get<ActivityTeacher>("Преподаватели направлений", ids);
+
+            public static ActivityTeacher Add(ActivityTeacher activityTeacher)
+            {
+                DataBase.Methods.Add("Преподаватели направлений", new object[] { activityTeacher.ActivityId,
+                                                                            activityTeacher.TeacherId});
+
+                return Get(activityTeacher.ActivityId, activityTeacher.TeacherId);
+            }
+
+            public static ActivityTeacher Update(ActivityTeacher activityTeacher)
+            {
+                DataBase.Methods.Update("Преподаватели направлений", new object[] { activityTeacher.Id,
+                                                                               activityTeacher.ActivityId,
+                                                                               activityTeacher.TeacherId});
+
+                return Get(activityTeacher.ActivityId, activityTeacher.TeacherId);
+            }
+
+            public static bool Delete(int id) => DataBase.Methods.Delete("Преподаватели направлений", id);
         }
 
         public static class Reviews
