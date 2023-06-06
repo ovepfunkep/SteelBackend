@@ -1,8 +1,6 @@
 ﻿using DataBase.Entities;
-using static Application.Methods;
 using Newtonsoft.Json;
-using static Application.Extensions;
-using System.Linq;
+using static Application.Methods;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -200,7 +198,7 @@ app.MapGet(middlewareTeachersPath + "/extended/{id}", (int id) =>
     }
 });
 
-app.MapGet(middlewareTeachersPath + "/activity/{id}", (int id) =>
+app.MapGet(middlewareTeachersPath + "extended/activity/{id}", (int id) =>
 {
     try
     {
@@ -246,6 +244,64 @@ app.MapDelete(middlewareTeachersPath + "/{id}", (int id) =>
     try
     {
         return Results.Json(Teachers.Delete(id));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+
+//Activities teachers middleware
+string middlewareActivitiesTeachersPath = "/api/activitiesTeachers";
+
+app.MapGet(middlewareActivitiesTeachersPath, () =>
+{
+    try
+    {
+        return Results.Json(ActivitiesTeachers.Get());
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPost(middlewareActivitiesTeachersPath + "/{activityTeacherString}", (string activityTeacherString) =>
+{
+    try
+    {
+        ActivityTeacher activityTeacher = JsonConvert.DeserializeObject<ActivityTeacher>(activityTeacherString)!;
+        ActivityTeacher? dbActivityTeacher = ActivitiesTeachers.Get(activityTeacher.ActivityId, activityTeacher.TeacherId);
+        if (dbActivityTeacher != null) throw new Exception($"Activity already has {activityTeacher}!");
+
+        return Results.Json(ActivitiesTeachers.Add(activityTeacher));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPut(middlewareActivitiesTeachersPath + "/{activityTeacherString}", (string activityTeacherString) =>
+{
+    try
+    {
+        ActivityTeacher activityTeacher = JsonConvert.DeserializeObject<ActivityTeacher>(activityTeacherString)!;
+
+        return Results.Json(ActivitiesTeachers.Update(activityTeacher));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapDelete(middlewareActivitiesTeachersPath + "/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(ActivitiesTeachers.Delete(id));
     }
     catch (Exception ex)
     {
@@ -406,6 +462,18 @@ app.MapGet(middlewareAppointmentsPath, () =>
     }
 });
 
+app.MapGet(middlewareAppointmentsPath + "/extended/training/{trainingId}", (int trainingId) =>
+{
+    try
+    {
+        return Results.Json(Appointments.GetExtended(trainingId));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 app.MapPost(middlewareAppointmentsPath + "/{appointmentString}", (string appointmentString) =>
 {
     try
@@ -448,7 +516,7 @@ app.MapDelete(middlewareAppointmentsPath + "/{id}", (int id) =>
     }
 });
 
-//Appointments middleware
+//Attendees middleware
 string middlewareАttendeesPath = "/api/attendees";
 
 app.MapGet(middlewareАttendeesPath, () =>
@@ -498,6 +566,63 @@ app.MapDelete(middlewareАttendeesPath + "/{id}", (int id) =>
     try
     {
         return Results.Json(Attendees.Delete(id));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+//Users achievements middleware
+string middlewareUsersAchievementsPath = "/api/usersAchievements";
+
+app.MapGet(middlewareUsersAchievementsPath, () =>
+{
+    try
+    {
+        return Results.Json(UsersAchievements.Get());
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPost(middlewareUsersAchievementsPath + "/{usersAchievementsString}", (string usersAchievementsString) =>
+{
+    try
+    {
+        UserAchievements usersAchievements = JsonConvert.DeserializeObject<UserAchievements>(usersAchievementsString)!;
+        UserAchievements? dbUserAchievements = UsersAchievements.Get(usersAchievements.UserId, usersAchievements.AchievementId);
+        if (dbUserAchievements != null) throw new Exception("User already has this achievement!");
+
+        return Results.Json(UsersAchievements.Add(usersAchievements));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPut(middlewareUsersAchievementsPath + "/{usersAchievementsString}", (string usersAchievementsString) =>
+{
+    try
+    {
+        UserAchievements usersAchievements = JsonConvert.DeserializeObject<UserAchievements>(usersAchievementsString)!;
+
+        return Results.Json(UsersAchievements.Update(usersAchievements));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapDelete(middlewareUsersAchievementsPath + "/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(UsersAchievements.Delete(id));
     }
     catch (Exception ex)
     {

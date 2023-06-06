@@ -21,7 +21,7 @@
     <br />
     <!-- Функционал преподавателей -->
     <button id="buttonGetTeachers">GetTeachers</button>
-    <button id="buttonGetCertainActivityTeachers">GetCertainActivityTeachers</button>
+    <button id="buttonGetCertainActivityExtendedTeachers">GetCertainActivityExtendedTeachers</button>
     <button id="buttonGetTeachersExtended">GetTeachersExtended</button>
     <button id="buttonGetTeacherExtended">GetTeacherExtended</button>
     <button id="buttonAddTeacher">AddTeacher</button>
@@ -48,6 +48,12 @@
     <button id="buttonUpdateAppointment">UpdateAppointment</button>
     <button id="buttonDeleteAppointment">DeleteAppointment</button>
     <br />
+    <!-- Функционал преподавателей направлений -->
+    <button id="buttonGetActivitiesTeachers">GetActivitiesTeachers</button>
+    <button id="buttonAddActivityTeacher">AddActivityTeacher</button>
+    <button id="buttonUpdateActivityTeacher">UpdateActivityTeacher</button>
+    <button id="buttonDeleteActivityTeacher">DeleteActivityTeacher</button>
+    <br />
     <!-- Функционал посетителей -->
     <button id="buttonGetAttendees">GetAttendees</button>
     <button id="buttonAddAttend">AddAttend</button>
@@ -60,6 +66,12 @@
     <button id="buttonAddAchievement">AddAchievement</button>
     <button id="buttonUpdateAchievement">UpdateAchievement</button>
     <button id="buttonDeleteAchievement">DeleteAchievement</button>
+    <br />
+    <!-- Функционал ачивок пользователей -->
+    <button id="buttonGetUsersAchievements">GetUsersAchievements</button>
+    <button id="buttonAddUserAchievement">AddUserAchievement</button>
+    <button id="buttonUpdateUserAchievement">UpdateUserAchievement</button>
+    <button id="buttonDeleteUserAchievement">DeleteUserAchievement</button>
     <br />
     <!-- Функционал отзывов -->
     <button id="buttonGetReviews">GetReviews</button>
@@ -263,9 +275,9 @@
             }
         });
 
-        document.getElementById("buttonGetCertainActivityTeachers").addEventListener("click", async () => {
+        document.getElementById("buttonGetCertainActivityExtendedTeachers").addEventListener("click", async () => {
             try {
-                const response = await fetch("/api/teachers/activity/1");
+                const response = await fetch("/api/teachers/extended/activity/1");
 
                 if (response.ok === true) {
                     const data = await response.json();
@@ -294,7 +306,7 @@
                 console.log(error);
             }
         });
-        
+
         document.getElementById("buttonGetTeacherExtended").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/teachers/extended/1");
@@ -625,8 +637,8 @@
                 console.log(error);
             }
         });
-        
-        //Appointments requests
+
+        //Attendees requests
         document.getElementById("buttonGetAttendees").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/attendees");
@@ -702,10 +714,10 @@
             }
         });
 
-        //Achievements requests
-        document.getElementById("buttonGetAchievements").addEventListener("click", async () => {
+        //Activities teachers requests
+        document.getElementById("buttonGetActivitiesTeachers").addEventListener("click", async () => {
             try {
-                const response = await fetch("/api/achievements");
+                const response = await fetch("/api/activitiesTeachers");
 
                 if (response.ok === true) {
                     const data = await response.json();
@@ -719,9 +731,145 @@
             }
         });
 
+        document.getElementById("buttonAddActivityTeacher").addEventListener("click", async () => {
+            try {
+                const activityTeacher = {
+                    ActivityId: "1",
+                    TeacherId: "15"
+                }
+                const activityTeacherString = JSON.stringify(activityTeacher);
+                const response = await fetch(`/api/activitiesTeachers/${activityTeacherString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonUpdateActivityTeacher").addEventListener("click", async () => {
+            try {
+                const activityTeacher = {
+                    Id: 1,
+                    ActivityId: 1,
+                    TeacherId: 20
+                }
+                const activityTeacherString = JSON.stringify(activityTeacher);
+                const response = await fetch(`/api/activitiesTeachers/${activityTeacherString}`, { method: "PUT" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonDeleteActivityTeacher").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/activitiesTeachers/1`, { method: "Delete" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        //Users achievements requests
         document.getElementById("buttonGetUsersAchievements").addEventListener("click", async () => {
             try {
-                const response = await fetch("/api/achievements/users/15");
+                const response = await fetch("/api/usersAchievements");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonAddUserAchievement").addEventListener("click", async () => {
+            try {
+                const userAchievement = {
+                    UserId: 1,
+                    AchievementId: 3
+                }
+                const userAchievementString = JSON.stringify(userAchievement);
+                const response = await fetch(`/api/usersAchievements/${userAchievementString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonUpdateUserAchievement").addEventListener("click", async () => {
+            try {
+                const userAchievement = {
+                    Id: 1,
+                    UserId: 20,
+                    AchievementId: 1
+                }
+                const userAchievementString = JSON.stringify(userAchievement);
+                const response = await fetch(`/api/usersAchievements/${userAchievementString}`, { method: "PUT" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonDeleteUserAchievement").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/usersAchievements/1`, { method: "Delete" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        //Achievements requests
+        document.getElementById("buttonGetAchievements").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/achievements");
 
                 if (response.ok === true) {
                     const data = await response.json();
