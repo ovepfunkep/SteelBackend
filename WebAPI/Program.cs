@@ -448,6 +448,63 @@ app.MapDelete(middlewareAppointmentsPath + "/{id}", (int id) =>
     }
 });
 
+//Appointments middleware
+string middlewareАttendeesPath = "/api/attendees";
+
+app.MapGet(middlewareАttendeesPath, () =>
+{
+    try
+    {
+        return Results.Json(Attendees.Get());
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPost(middlewareАttendeesPath + "/{attendString}", (string attendString) =>
+{
+    try
+    {
+        Attend attend = JsonConvert.DeserializeObject<Attend>(attendString)!;
+        Attend? dbAttend = Attendees.Get(attend.TrainingId, attend.UserId);
+        if (dbAttend != null) throw new Exception("User already beeing attended!");
+
+        return Results.Json(Attendees.Add(attend));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapPut(middlewareАttendeesPath + "/{attendString}", (string attendString) =>
+{
+    try
+    {
+        Attend attend = JsonConvert.DeserializeObject<Attend>(attendString)!;
+
+        return Results.Json(Attendees.Update(attend));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
+app.MapDelete(middlewareАttendeesPath + "/{id}", (int id) =>
+{
+    try
+    {
+        return Results.Json(Attendees.Delete(id));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 //Achievements middleware
 string middlewareAchievementsPath = "/api/achievements";
 

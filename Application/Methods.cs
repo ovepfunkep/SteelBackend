@@ -387,6 +387,40 @@ and `Id пользователя` = {userId}").Select(lo => lo.ToAppointment()).
 
             public static bool Delete(int id) => DataBase.Methods.Delete("Записи на занятия", id);
         }
+        
+        public static class Attendees
+        {
+            public static Attend? Get(int trainingId, int userId)
+            {
+                List<Attend> result = DataBase.Methods.GetCustom($@"Select * 
+from `Посетители занятия`
+where `Id занятия` = '{trainingId}'
+and `Id пользователя` = {userId}").Select(lo => lo.ToAttend()).ToList();
+
+                return result.Count > 0 ? result[0] : null;
+            }
+
+            public static List<Attend> Get(List<int>? ids = null) => Generic.Get<Attend>("Посетители занятия", ids);
+
+            public static Attend Add(Attend appointment)
+            {
+                DataBase.Methods.Add("Посетители занятия", new object[] { appointment.TrainingId, 
+                                                                         appointment.UserId });
+
+                return Get(appointment.TrainingId, appointment.UserId);
+            }
+
+            public static Attend Update(Attend appointment)
+            {
+                DataBase.Methods.Update("Посетители занятия", new object[] { appointment.Id,
+                                                                            appointment.TrainingId,
+                                                                            appointment.UserId});
+
+                return Get(appointment.TrainingId, appointment.UserId);
+            }
+
+            public static bool Delete(int id) => DataBase.Methods.Delete("Посетители занятия", id);
+        }
 
         public static class Achievements
         {

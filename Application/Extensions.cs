@@ -15,6 +15,7 @@ namespace Application
                 nameof(Training) => (T)(object)list.ToTraining(),
                 nameof(Achievement) => (T)(object)list.ToAchievement(),
                 nameof(Appointment) => (T)(object)list.ToAppointment(),
+                nameof(Attend) => (T)(object)list.ToAttend(),
                 nameof(Review) => (T)(object)list.ToReview(),
                 _ => throw new ArgumentException($"There's now such class as {typeof(T).Name}")
             };
@@ -65,6 +66,10 @@ namespace Application
                                                                                list[3].ToStr());
         
         public static Appointment ToAppointment(this List<object> list) => new(list[0].ToInt(),
+                                                                               list[1].ToInt(),
+                                                                               list[2].ToInt());
+        
+        public static Attend ToAttend(this List<object> list) => new(list[0].ToInt(),
                                                                                list[1].ToInt(),
                                                                                list[2].ToInt());
         

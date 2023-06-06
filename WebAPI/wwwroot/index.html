@@ -48,6 +48,12 @@
     <button id="buttonUpdateAppointment">UpdateAppointment</button>
     <button id="buttonDeleteAppointment">DeleteAppointment</button>
     <br />
+    <!-- Функционал посетителей -->
+    <button id="buttonGetAttendees">GetAttendees</button>
+    <button id="buttonAddAttend">AddAttend</button>
+    <button id="buttonUpdateAttend">UpdateAttend</button>
+    <button id="buttonDeleteAttend">DeleteAttend</button>
+    <br />
     <!-- Функционал ачивок -->
     <button id="buttonGetAchievements">GetAchievements</button>
     <button id="buttonGetUsersAchievements">GetUsersAchievements</button>
@@ -607,6 +613,82 @@
         document.getElementById("buttonDeleteAppointment").addEventListener("click", async () => {
             try {
                 const response = await fetch(`/api/appointments/1`, { method: "Delete" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        //Appointments requests
+        document.getElementById("buttonGetAttendees").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/attendees");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonAddAttend").addEventListener("click", async () => {
+            try {
+                const attend = {
+                    TrainingId: "1",
+                    UserId: "15"
+                }
+                const attendString = JSON.stringify(attend);
+                const response = await fetch(`/api/attendees/${attendString}`, { method: "POST" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonUpdateAttend").addEventListener("click", async () => {
+            try {
+                const attend = {
+                    Id: 1,
+                    TrainingId: "1",
+                    UserId: 15
+                }
+                const attendString = JSON.stringify(attend);
+                const response = await fetch(`/api/attendees/${attendString}`, { method: "PUT" });
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        document.getElementById("buttonDeleteAttend").addEventListener("click", async () => {
+            try {
+                const response = await fetch(`/api/attendees/1`, { method: "Delete" });
 
                 if (response.ok === true) {
                     const data = await response.json();
