@@ -198,7 +198,7 @@ app.MapGet(middlewareTeachersPath + "/extended/{id}", (int id) =>
     }
 });
 
-app.MapGet(middlewareTeachersPath + "extended/activity/{id}", (int id) =>
+app.MapGet(middlewareTeachersPath + "/extended/activity/{id}", (int id) =>
 {
     try
     {
