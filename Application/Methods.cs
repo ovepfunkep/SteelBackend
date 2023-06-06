@@ -107,7 +107,7 @@ where `Название` = '{name}'").Select(lo => lo.ToActivity()).ToList();
                 DataBase.Methods.GetCustom(@$"SELECT `Направления`.`Id`, `Название`, `Описание`, `Фотография`, `Иконка`, `Длительность` 
 FROM `Направления` 
 INNER JOIN `Преподаватели направлений` on `Преподаватели направлений`.`Id направления` = `Направления`.`Id`
-WHERE `Преподаватели направлений`.`Id` = {teacherId}")
+WHERE `Преподаватели направлений`.`Id преподавателя` = {teacherId}")
                                 .Select(lo => lo.ToActivity())
                                 .ToList();
 

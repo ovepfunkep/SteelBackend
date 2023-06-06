@@ -810,8 +810,8 @@
         document.getElementById("buttonAddUserAchievement").addEventListener("click", async () => {
             try {
                 const userAchievement = {
-                    UserId: 1,
-                    AchievementId: 3
+                    UserId: 19,
+                    AchievementId: 0
                 }
                 const userAchievementString = JSON.stringify(userAchievement);
                 const response = await fetch(`/api/usersAchievements/${userAchievementString}`, { method: "POST" });
