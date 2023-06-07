@@ -44,6 +44,7 @@
     <br />
     <!-- Функционал записей -->
     <button id="buttonGetAppointments">GetAppointments</button>
+    <button id="buttonGetAppointment">GetAppointment</button>
     <button id="buttonAddAppointment">AddAppointment</button>
     <button id="buttonUpdateAppointment">UpdateAppointment</button>
     <button id="buttonDeleteAppointment">DeleteAppointment</button>
@@ -566,6 +567,27 @@
         document.getElementById("buttonGetAppointments").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/appointments");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+        document.getElementById("buttonGetAppointment").addEventListener("click", async () => {
+            try {
+                const appointment = {
+                    TrainingId: "1",
+                    UserId: "15"
+                }
+                const appointmentString = JSON.stringify(appointment);
+                const response = await fetch(`/api/appointments/${appointmentString}`);
 
                 if (response.ok === true) {
                     const data = await response.json();

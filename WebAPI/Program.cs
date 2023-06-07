@@ -462,6 +462,19 @@ app.MapGet(middlewareAppointmentsPath, () =>
     }
 });
 
+app.MapGet(middlewareAppointmentsPath + "/{appointmentString}", (string appointmentString) =>
+{
+    try
+    {
+        var appointment = JsonConvert.DeserializeObject<Appointment>(appointmentString)!;
+        return Results.Json(Appointments.Get(appointment.TrainingId, appointment.UserId));
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem(title: ex.Message);
+    }
+});
+
 app.MapGet(middlewareAppointmentsPath + "/extended/training/{trainingId}", (int trainingId) =>
 {
     try
