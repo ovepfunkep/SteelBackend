@@ -356,7 +356,7 @@ WHERE `Записи на занятия`.`Id пользователя` = {userId
 
         public static class Appointments
         {
-            public static Appointment? Get(int trainingId, int userId)
+            public static Appointment? Get(int trainingId, int userId = 0)
             {
                 List<Appointment> result = DataBase.Methods.GetCustom($@"Select * 
 from `Записи на занятия`

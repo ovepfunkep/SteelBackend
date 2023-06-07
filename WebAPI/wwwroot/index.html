@@ -44,6 +44,7 @@
     <br />
     <!-- Функционал записей -->
     <button id="buttonGetAppointments">GetAppointments</button>
+    <button id="buttonGetAppointmentsExtendedByTrainingId">GetAppointmentsExtendedByTraining</button>
     <button id="buttonGetAppointment">GetAppointment</button>
     <button id="buttonAddAppointment">AddAppointment</button>
     <button id="buttonUpdateAppointment">UpdateAppointment</button>
@@ -153,8 +154,8 @@
         document.getElementById("buttonUpdateUser").addEventListener("click", async () => {
             try {
                 const user = {
-                    id: 23,
-                    name: "Pupsich1"
+                    id: 15,
+                    dateOfBirth: '0001-01-01T01:01:01'
                 }
                 const userString = JSON.stringify(user);
                 const response = await fetch(`/api/users/${userString}`, { method: "PUT" });
@@ -580,11 +581,27 @@
             }
         });
         
+        document.getElementById("buttonGetAppointmentsExtendedByTrainingId").addEventListener("click", async () => {
+            try {
+                const response = await fetch("/api/appointments/extended/training/1");
+
+                if (response.ok === true) {
+                    const data = await response.json();
+                    console.log(data);
+                } else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
         document.getElementById("buttonGetAppointment").addEventListener("click", async () => {
             try {
                 const appointment = {
-                    TrainingId: "1",
-                    UserId: "15"
+                    TrainingId: 3,
+                    UserId: 15
                 }
                 const appointmentString = JSON.stringify(appointment);
                 const response = await fetch(`/api/appointments/${appointmentString}`);
