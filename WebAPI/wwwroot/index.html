@@ -154,8 +154,8 @@
         document.getElementById("buttonUpdateUser").addEventListener("click", async () => {
             try {
                 const user = {
-                    id: 15,
-                    dateOfBirth: '0001-01-01T01:01:01'
+                    id: 20,
+                    city: '123'
                 }
                 const userString = JSON.stringify(user);
                 const response = await fetch(`/api/users/${userString}`, { method: "PUT" });
