@@ -36,7 +36,8 @@ namespace Application
                                                                  list[9].ToDateTime(),
                                                                  list[10].ToStr(),
                                                                  list[11].ToStr(),
-                                                                 list[12].ToStr());
+                                                                 list[12].ToStr(),
+                                                                 list[13].ToStr());
 
         public static Activity ToActivity(this List<object> list) => new(list[0].ToInt(),
                                                                          list[1].ToStr(),
