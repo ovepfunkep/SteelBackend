@@ -1,4 +1,5 @@
 ﻿using DataBase.Entities;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using static Application.Methods;
 
@@ -784,20 +785,6 @@ app.MapDelete(middlewareReviewsPath + "/{id}", (int id) =>
     {
         return Results.Problem(title: ex.Message);
     }
-});
-
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-
-    endpoints.MapFallbackToFile("index.html");
-
-    endpoints.Map("/", context =>
-    {
-        context.Response.Redirect("/tests");
-        return Task.CompletedTask;
-    });
 });
 
 
