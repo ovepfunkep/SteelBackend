@@ -77,7 +77,7 @@
     <br />
     <!-- Функционал отзывов -->
     <button id="buttonGetReviews">GetReviews</button>
-    <button id="buttonGetReview">GetReview</button>
+    <button id="buttonGetTeacherReviews">GetTeacherReviews</button>
     <button id="buttonAddReview">AddReview</button>
     <button id="buttonUpdateReview">UpdateReview</button>
     <button id="buttonDeleteReview">DeleteReview</button>
@@ -1012,7 +1012,7 @@
             }
         });
 
-        document.getElementById("buttonGetReview").addEventListener("click", async () => {
+        document.getElementById("buttonGetTeacherReviews").addEventListener("click", async () => {
             try {
                 const response = await fetch("/api/reviews/teacher/1");
 

@@ -16,6 +16,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseRouting();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseCors();
@@ -732,7 +733,7 @@ app.MapGet(middlewareReviewsPath + "/teacher/{id}", (int id) =>
 {
     try
     {
-        return Results.Json(Reviews.GetExtended(teacherId: id)[0]);
+        return Results.Json(Reviews.GetExtended(teacherId: id));
     }
     catch (Exception ex)
     {
@@ -784,5 +785,6 @@ app.MapDelete(middlewareReviewsPath + "/{id}", (int id) =>
         return Results.Problem(title: ex.Message);
     }
 });
+
 
 app.Run();
