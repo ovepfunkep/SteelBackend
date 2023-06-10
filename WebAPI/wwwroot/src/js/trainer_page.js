@@ -254,8 +254,8 @@ async function PostReview(review) {
     if (response.ok == true) {
         const data = await response.json();
         console.log(data);
-        AddReviewToPage(review);
         location.reload(true)
+        AddReviewToPage(review);
 
     } else {
         const error = await response.json();
