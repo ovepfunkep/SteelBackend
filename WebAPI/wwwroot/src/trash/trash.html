@@ -1,0 +1,306 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/ico">
+
+    <title>Schedule</title>
+</head>
+
+<body>
+
+    <div id="headerContainer"></div>
+
+    <section class="schedule">
+        <div class="container">
+
+            <div class="col-md-5 col-xl-4">
+                <div class="header_marker">
+                    <img src="icons/marker_train.png" class="marker">
+                    <span class="marker_text"> Расписание </span>
+                </div>
+            </div>
+            <img onclick="toggleFilterMenu()" src="icons/filter.svg" class="filter_img filters_button xl-hidden">
+            <div id="dateRange" class="row">
+                <div class="col-10 col-md-7 col-lg-6 col-xl-5">
+                    <div class="month">
+                        <button id="prevBtn" class="month_back_btn"><img src="icons/month_back_btn1.png"
+                                class="month_back_btn_img"></button>
+                        <div class="month_text">Январь 2023</div>
+                        <button id="nextBtn" class="month_back_btn"><img src="icons/month_back_btn2.png"
+                                class="month_back_btn_img"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row drop md-hidden_schedule">
+                <div class="col-md-8 col-xl-8 col-xxl-7">
+                    <div class="dropdowns">
+                        <div class="filter_container">
+                            <div class="filter_box">
+                                <div class="filter_title" onclick="toggleFilter('filter1')">Все тренеры</div>
+                                <img src="icons/dropdown_arrow.png" class="filter_img"
+                                    onclick="toggleFilter('filter1')">
+                                <div id="filter1" class="filter_content">
+                                    <div class="filter_option" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="filter1_option" value="option1">
+                                        <label>Юлия Антипова</label>
+                                    </div>
+                                    <div class="filter_option" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="filter1_option" value="option2">
+                                        <label>Артём Макров</label>
+                                    </div>
+                                    <div class="filter_option" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="filter1_option" value="option3">
+                                        <label>Елена Полякова</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter_box">
+                                <div class="filter_title" onclick="toggleFilter('filter2')">Все занятия</div>
+                                <img src="icons/dropdown_arrow.png" class="filter_img"
+                                    onclick="toggleFilter('filter2')">
+                                <div id="filter2" class="filter_content">
+                                    <div class="filter_option" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="filter2_option" value="optionA">
+                                        <label>Йога</label>
+                                    </div>
+                                    <div class="filter_option" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="filter2_option" value="optionB">
+                                        <label>Растяжка</label>
+                                    </div>
+                                    <div class="filter_option" onclick="toggleCheckbox(this)">
+                                        <input type="checkbox" name="filter2_option" value="optionC">
+                                        <label>Фитнес</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="line_trainings">
+                <div id="mondayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ПН</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="tuesdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ВТ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="wednesdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">СР</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="thursdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ЧТ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="fridayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ПТ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="saturdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">СБ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="sundayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ВС</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="footerContainer"></div>
+            <script src="js/schedule.js"></script>
+            <script src="js/elements/header.js"></script>
+            <script src="js/elements/footer.js"></script>
+            <script src="js/interactive_elems/trainer_popup.js"></script>
+            <script src="js/interactive_elems/filters.js"></script>
+            <script src="js/interactive_elems/filter_phone.js"></script>
+            <script>
+                var currentDate = new Date();
+                var currentDayOfWeek = currentDate.getDay();
+                var daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+                currentDate.setDate(currentDate.getDate() - daysToMonday);
+
+                let trainings = //GetMonthlyTrainings(); 
+                    [
+                        {
+                            id: 1,
+                            activity: {
+                                id: 1,
+                                nameOfactivity: "Йога",
+                                description: "бубубу",
+                                photo: "img/yoga.png",
+                                icon: "icons/yoga.svg",
+                                LastsInMinutes: 60,
+                            },
+                            trainer: {
+                                id: 1,
+                                user: {
+                                    id: 1,
+                                    roleId: 1,
+                                    surname: "Шинакрук",
+                                    name: "София",
+                                    middleName: "Олеговна",
+                                    email: "shinkaruks@mer.ci.nsu.ru",
+                                    phone: "+79046478828",
+                                    password: "123",
+                                    gender: "Женский",
+                                    dateOfBirth: "2003-11-21",
+                                    photo: "img/triner_ulia.png",
+                                    vkontakte: "awfultthing",
+                                    telegram: "awfultthing",
+                                    city: "Новосибирск",
+                                },
+                                experience: "2 года",
+                                description: "бубубуб",
+                            },
+                            dateTime: "2023-05-29 15:00",
+                            places: 12,
+                        },
+                        {
+                            id: 2,
+                            activity: {
+                                id: 2,
+                                nameOfactivity: "Растяжка",
+                                description: "бубубу",
+                                photo: "img/stretching.png",
+                                icon: "icons/stretching.svg",
+                                LastsInMinutes: 60,
+                            },
+                            trainer: {
+                                id: 1,
+                                user: {
+                                    id: 1,
+                                    roleId: 1,
+                                    surname: "Шинакрук",
+                                    name: "София",
+                                    middleName: "Олеговна",
+                                    email: "shinkaruks@mer.ci.nsu.ru",
+                                    phone: "+79046478828",
+                                    password: "123",
+                                    gender: "Женский",
+                                    dateOfBirth: "2003-11-21",
+                                    photo: "img/triner_ulia.png",
+                                    vkontakte: "awfultthing",
+                                    telegram: "awfultthing",
+                                    city: "Новосибирск",
+                                },
+                                experience: "2 года",
+                                description: "бубубуб",
+                            },
+                            dateTime: "2023-06-03 13:00",
+                            places: 13,
+                        },
+                        {
+                            id: 3,
+                            activity: {
+                                id: 2,
+                                nameOfactivity: "Фитнес",
+                                description: "бубубу",
+                                photo: "img/stretching.png",
+                                icon: "icons/stretching.svg",
+                                LastsInMinutes: 60,
+                            },
+                            trainer: {
+                                id: 1,
+                                user: {
+                                    id: 1,
+                                    roleId: 1,
+                                    surname: "Шинакрук",
+                                    name: "София",
+                                    middleName: "Олеговна",
+                                    email: "shinkaruks@mer.ci.nsu.ru",
+                                    phone: "+79046478828",
+                                    password: "123",
+                                    gender: "Женский",
+                                    dateOfBirth: "2003-11-21",
+                                    photo: "img/triner_ulia.png",
+                                    vkontakte: "awfultthing",
+                                    telegram: "awfultthing",
+                                    city: "Новосибирск",
+                                },
+                                experience: "2 года",
+                                description: "бубубуб",
+                            },
+                            dateTime: "2023-06-03 13:00",
+                            places: 13,
+                        }
+                    ];
+
+                var containers = document.querySelectorAll('.column_with_trainings_card');
+
+                containers.forEach(function (container) {
+                    container.querySelector('.date').textContent = currentDate.getDate();
+
+                    trainings.filter(training => {
+                        var trainingDate = new Date(training.dateTime);
+                        return trainingDate.getDate() === currentDate.getDate();
+                    }).forEach(training => {
+                        const startTime = training.dateTime.split(' ')[1];
+                        const duration = training.activity.LastsInMinutes;
+
+                        var start = new Date(`2000-01-01 ${startTime}`);
+                        var end = new Date(start.getTime() + duration * 60000); // Convert duration to milliseconds
+
+                        const startHours = start.getHours().toString().padStart(2, '0');
+                        const startMinutes = start.getMinutes().toString().padStart(2, '0');
+
+                        const endHours = end.getHours().toString().padStart(2, '0');
+                        const endMinutes = end.getMinutes().toString().padStart(2, '0');
+
+                        container.querySelector('.cards').innerHTML += `<div class="schedule_card ${training.activity.nameOfactivity === "Йога" ? "blue" : training.activity.nameOfactivity === "Фитнес" ? "green" : ""}">
+            <div class="card_name"> ${training.activity.nameOfactivity} </div>
+            <div class="card_line"></div>
+            <div class="trainer_name"> ${training.trainer.user.name} ${training.trainer.user.surname} </div>
+            <div class="card_time"> ${startHours}:${startMinutes} – ${endHours}:${endMinutes} </div>
+        </div>`;
+                    });
+
+                    currentDate.setDate(currentDate.getDate() + 1);
+                });
+
+            </script>
+</body>
+
+
+</html>

@@ -24,7 +24,7 @@ app.UseCors();
 
 app.UseDefaultFiles(new DefaultFilesOptions
 {
-    DefaultFileNames = new List<string> { "SteelFrontend/src/index.html" }
+    DefaultFileNames = new List<string> { "/src/index.html" }
 });
 
 //Users middleware

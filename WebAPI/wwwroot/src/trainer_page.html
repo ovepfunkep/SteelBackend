@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/ico">
+
+    <title id="trainer_page_title"></title>
+</head>
+
+<body>
+    <div id="headerContainer"></div>
+
+    <div class="banner_acc"></div>
+    <section class="account_info">
+        <div class="container">
+            <div class="photo_wrapper">
+                <img id="account_photo" src="img/triner_ulia.png" alt="photo" class="account_photo">
+            </div>
+            <div class="account_content">
+                <div id="account_name" class="account_name">Имя</div>
+                <div id="account_add_info" class="account_age">Что ведёт и опыт</div>
+                <div class="account_descr">
+                    <img src="icons/pin.svg" alt="pin" class="account_icon">
+                    <div id="city" class="account_text">Город</div>
+                    <img src="icons/vk_logo.svg" alt="vk" class="account_icon sec">
+                    <div id="vk" class="account_text">Вк</div>
+                    <img src="icons/telega.svg" alt="vk" class="account_icon sec">
+                    <div id="telega" class="account_text"></div>
+                    <img src="icons/info.svg" alt="vk" id="account_icon_add_info" class="account_icon sec xl-hidden">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="popup_add_info_wrapper xl-hidden">
+        <div class="popup_header">
+            Подробная информация
+        </div>
+        <div class="popup_row_inf">
+            <img src="icons/phone.svg" alt="phone" class="popup_icon">
+            <div id="phone_small" class="popup_text">номер</div>
+        </div>
+        <div class="popup_row_inf">
+            <img src="icons/convert.svg" alt="phone" class="popup_icon">
+            <div id="email_small" class="popup_text">почта</div>
+        </div>
+    </div>
+
+    <section class="main_trainer_section">
+        <div class="container">
+            <div class="row wide_width">
+                <div class="col-md-4 col-xl-3 md-hidden_on_index">
+                    <div class="additional_info ">
+                        <div class="info_col">
+                            <img src="icons/phone.svg" alt="phone" class="info_icon">
+                            <div id="phone" class="info_text">+7 (913) 734-73-23</div>
+                        </div>
+                        <div class="info_col down">
+                            <img src="icons/convert.svg" alt="pin" class="info_icon">
+                            <div id="email" class="info_text">antipova_yulia@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-8 col-xl-9">
+                    <div class="main_information">
+                        <div class="row_inf">
+                            <div class="header_marker">
+                                <img src="icons/marker_train.png" class="marker of_trainers">
+                                <span class="marker_text"> Обо мне </span>
+                            </div>
+                        </div>
+
+                        <div id="additional_info" class="about_text">
+                            Два высших образования,в том числе профильное спортивное высшее образование и дополнительное
+                            образование в области консультирования по психологии.
+                        </div>
+                        <div class="section_with_button">
+                            <div class="row with_margin">
+                                <div class="col-md-6 col-xl-4">
+                                    <button onclick="document.location='schedule.html'"
+                                        class="banner_btn">Расписание</button>
+                                </div>
+                                <div class="col-md-6  col-xl-7 offset-xl-1">
+                                    <div class="descr_line sm-hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="review_section" class="rewiew">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="footerContainer"></div>
+    <script src="js/trainer_page.js"></script>
+    <script src="js/elements/header.js"></script>
+    <script src="js/elements/footer.js"></script>
+    <script src="js/interactive_elems/account_popup.js"></script>
+</body>
+
+</html>

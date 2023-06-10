@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/ico">
+
+
+    <title id="activity_page_title"></title>
+</head>
+
+<body>
+    <div id="headerContainer"></div>
+
+    <button class="back_btn xl-hidden" onclick="document.location='trainings.html'"><img src=" icons/back_arrow2.svg"
+            class="btn_arrow"></button>
+
+
+    <img src="img/yoga_banner.png" id="banner" class="yoga_banner">
+
+    <section class="page_info">
+
+        <div class="container">
+
+            <div class="main_block">
+                <h2 id="training_name" class="training_name"></h2>
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 col-xl-7 col-xxl-6">
+                        <div id="training_descr" class="training_descr">
+                            Йога – это отличный способ отвлечься от проблем и избавиться от ненужных мыслей. Она
+                            помогает познать себя как внешне, так и изнутри. Уже на первых занятиях вы сделаете большой
+                            шаг на пути к владению своим телом и управлению дыханием. Кроме того, как и все физические
+                            упражнения, йога позволяет держать мышцы в тонусе.
+                        </div>
+                    </div>
+                    <div class="col-lg-4 offset-lg-2  col-xl-3 offset-xl-1 col-xxl-3 offset-xxl-3">
+                        <img id="training_image" src="img/lotus.png" class="training_image">
+                    </div>
+                </div>
+                <div class="row with_margin">
+                    <div class="col-md-6 col-lg-5  col-xxl-4">
+                        <button onclick="document.location='schedule.html'" class="banner_btn">Записаться</button>
+
+                    </div>
+                    <div class="col-md-6  col-lg-7 offset-xxl-1">
+                        <div class="delimiter sm-hidden"></div>
+                    </div>
+                </div>
+
+                <section class="trainers">
+                    <div class="container">
+                        <h3 class="what_else">Тренеры</h3>
+                        <div id="trainer_on_activity_page" class="row">
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="footerContainer"></div>
+    <script src="js/activity_page.js"></script>
+    <script src="js/elements/header.js"></script>
+    <script src="js/elements/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/ico">
+    <title>Settings</title>
+</head>
+
+<body>
+    <div id="headerContainer"></div>
+
+    <section class="settings_section">
+        <div class="container">
+            <button onclick="document.location='account.html'" class="back_btn"><img src="icons/exit.svg"
+                    class="exit"></button>
+            <button class="photo_button">
+                <span class="icon-overlay">
+                    <img src="icons/camera.svg" alt="Icon">
+                </span>
+            </button>
+            <div class="account_name">Мария Игнатова</div>
+
+            <div class="settings_bg">
+                <form class="account_data">
+                    <div class="row">
+                        <div class="col-xxl-6 col-xl-5 col-md-3 form_wrapper">
+                            <label for="name">Имя</label>
+                            <input id="name" value="Мария" type="text"><br>
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 col-md-3 form_wrapper offset-xxl-1 offset-xl-0">
+                            <label for="surname">Фамилия</label>
+                            <input id="surname" value="Игнатова" type="text"><br>
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper">
+                            <label for="date_of_birth">Дата рождения</label>
+                            <input id="date_of_birth" value="1997-11-21" type="date"><br>
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper offset-xxl-1 offset-xl-0">
+                            <label for="gender">Пол</label>
+                            <select id="gender" name="gender">
+                                <option value="male">Мужской</option>
+                                <option value="female">Женский</option>
+                            </select>
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper">
+                            <label for="email">E-mail</label>
+                            <input id="email" value="mariya_ignatova@gmail.com" type="email">
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper offset-xxl-1 offset-xl-0">
+                            <label for="password">Пароль</label>
+                            <input id="password" value="Игнатова" type="text">
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper">
+                            <label for="phone">Телефон</label>
+                            <input id="phone" value="+7 904 647 88 28" type="tel">
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper offset-xxl-1 offset-xl-0">
+                            <label for="town">Город</label>
+                            <input id="town" value="Новосибирск, Россия" type="text">
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper">
+                            <label for="vk">Вконтакте</label>
+                            <input id="vk" value="mmmaasshaa" type="text">
+                        </div>
+                        <div class="col-xxl-6 col-xl-5 form_wrapper offset-xxl-1 offset-xl-0">
+                            <label for="telegram">Telegram</label>
+                            <input id="telegram" value="" type="text">
+                        </div>
+                    </div>
+                    <button id="update" type="button" class="banner_btn">Сохранить</button>
+                </form>
+            </div>
+
+
+        </div>
+
+
+    </section>
+    <div id="footerContainer"></div>
+    <script src="js/settings.js"></script>
+    <script src="js/elements/header.js"></script>
+    <script src="js/elements/footer.js"></script>
+</body>
+
+</html>

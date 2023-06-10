@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/ico">
+    <title>Welcome</title>
+</head>
+
+<body>
+    <div class="alertContainer"></div>
+    <section class="registration_section">
+        <img src="img/registration.png" class="reg_img">
+        <a href="index.html"><img src="icons/logo.png" class="reg_logo_img"></a>
+        <div class="data_box">
+            <div class="container">
+                <h2 class="registration_header">Вход</h2>
+                <form class="registration_data" action="#">
+                    <label for="phone">Телефон</label>
+                    <input class="phone" required id="phone" placeholder="+7 000 000 00 00" type="text">
+                    <div class="phoneError" id="phoneError" class="error-message"></div>
+                    <label for="password">Пароль</label>
+                    <input class="password" required id="password" placeholder="•••••••••" type="password">
+                    <div class="passwordError" id="passwordError" class="error-message"></div>
+                    <button onclick="GetUser(event)" type="submit" class="banner_btn">Войти</button>
+                </form>
+                <div class="registration_subheader subheader_login">Ещё не успели создать аккаунт?</div>
+                <a href="registration.html" class="registration_subheader_underlined login">Зарегистрируйтесь</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="mobile_registration_section hidden_on_laptop">
+        <a href="index.html"><img src="icons/logo.png" class="reg_logo_img"></a>
+
+        <div class="container">
+            <div class="data_box">
+                <h2 class="registration_header">Вход</h2>
+                <form class="registration_data" action="#">
+                    <label for="phone">Телефон</label>
+                    <input class="phone" required id="phone" placeholder="+7 000 000 00 00" type="text">
+                    <div class="phoneError" id="phoneError" class="error-message"></div>
+                    <label for="password">Пароль</label>
+                    <input class="password" required id="password" placeholder="•••••••••" type="password">
+                    <div class="passwordError" id="passwordError" class="error-message"></div>
+                    <button onclick="GetUser(event)" type="submit" class="banner_btn">Войти</button>
+                </form>
+                <div class="registration_subheader subheader_login">Ещё не успели создать аккаунт?</div>
+                <a href="registration.html" class="registration_subheader_underlined login">Зарегистрируйтесь</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="confirming_popup admin" id="confirmingPopup">
+        <div class="confirming_popup_header">
+            Как вы хотите войти?
+        </div>
+        <button onclick="redirectToAdminPanel()" class="banner_btn">Администратор</button>
+        <button onclick="redirectToUserPage()" class="banner_btn">Пользователь</button>
+    </div>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

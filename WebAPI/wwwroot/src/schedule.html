@@ -1,0 +1,315 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/ico">
+
+    <title>Schedule</title>
+</head>
+
+<body>
+
+    <div id="headerContainer"></div>
+    <div class="alertContainer"></div>
+    <section class="schedule">
+        <div class="container">
+
+            <div class="col-md-5 col-xl-4">
+                <div class="header_marker">
+                    <img src="icons/marker_train.png" class="marker">
+                    <span class="marker_text"> Расписание </span>
+                </div>
+            </div>
+
+
+
+
+            <div id="dateRange" class="row dateRange">
+                <div class="col-10 col-md-7 col-lg-6 col-xl-7">
+                    <div class="month">
+                        <button id="prevBtn" class="month_back_btn" onclick="UpdateByDate(DecreaseWeek)"><img
+                                src="icons/month_back_btn1.png" class="month_back_btn_img"></button>
+                        <div class="month_text">Январь 2023</div>
+                        <button id="nextBtn" class="month_back_btn" onclick="UpdateByDate(IncreaseWeek)"><img
+                                src="icons/month_back_btn2.png" class="month_back_btn_img"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row drop ">
+                <div class="col-md-10 col-xl-8 col-xxl-7">
+                    <div class="dropdowns">
+                        <div class="filter_container">
+                            <div class="filter_box">
+                                <div class="filter_title" onclick="toggleFilter('filter1')">Все тренеры</div>
+                                <img src="icons/dropdown_arrow.png" class="filter_img"
+                                    onclick="toggleFilter('filter1')">
+                                <div id="filter1" class="filter_content">
+
+                                </div>
+                            </div>
+                            <div class="filter_box">
+                                <div class="filter_title" onclick="toggleFilter('filter2')">Все занятия</div>
+                                <img src="icons/dropdown_arrow.png" class="filter_img"
+                                    onclick="toggleFilter('filter2')">
+                                <div id="filter2" class="filter_content">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line_trainings md-hidden_schedule">
+                <div id="mondayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ПН</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="tuesdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ВТ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="wednesdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">СР</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="thursdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ЧТ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="fridayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ПТ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="saturdayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">СБ</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+                <div id="sundayColumn" class="column_with_trainings_card">
+                    <div class="days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ВС</div>
+                    </div>
+                    <div class="cards">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="schedule_on_phones xl-hidden_on_schedule">
+        <div class="container">
+
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">ПН</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="demarcation_line"></div>
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">ВТ</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="demarcation_line"></div>
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">СР</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="demarcation_line"></div>
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">ЧТ</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="demarcation_line"></div>
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">ПТ</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="demarcation_line"></div>
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">СБ</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="demarcation_line"></div>
+
+            <div class="day-of-week">
+                <details>
+                    <summary class="new_days_of_week_header">ВС</summary>
+                    <hr>
+                    <div class="column_with_trainings_card">
+                        <div id="cards_section" class="row">
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+
+
+        </div>
+
+    </section>
+
+    <div id="popup" class="trainer_popup_wrapper">
+        <div class="popup_info_line">
+            <img src="icons/yoga.svg" alt="person" class="trainer_popup_header_icon">
+            <div class="trainer_popup_header_text">Йога</div>
+        </div>
+        <div class="trainer_popup_line"></div>
+        <div class="trainer_popup_mini_header">Тренер</div>
+        <div class="trainer_popup_card_wrapper">
+            <div class="trainer_popup_card_content_row">
+                <img src="img/trainer_artiom.png" alt="person" class="trainer_popup_card_photo">
+                <div class="trainer_popup_card_text_header">Артём Макаров</div>
+            </div>
+        </div>
+        <div class="trainer_popup_mini_header trainer_popup_mini_header_mb">Время занятия</div>
+        <div class="trainer_popup_card_content_row trainer_popup_card_content_row_aic">
+            <img src="icons/clock.svg" alt="clock" class="trainer_popup_card_icon">
+            <div id="training_time" class="trainer_popup_mini_header trainer_popup_mini_header_mini">16:00 – 18:00</div>
+        </div>
+
+        <div class="trainer_popup_mini_header trainer_popup_mini_header_mb">Свободных мест</div>
+        <div class="trainer_popup_card_content_row trainer_popup_card_content_row_aic">
+            <img src="icons/person.svg" alt="person" class="trainer_popup_card_icon">
+            <div id="training_seats" class="trainer_popup_mini_header trainer_popup_mini_header_mini">20</div>
+        </div>
+        <button id="signupButton" class="banner_btn">Записаться</button>
+    </div>
+
+    <div id="confirming_popup" class="confirming_popup">
+        <div class="confirming_popup_header">
+            Вы успешно записаны!
+        </div>
+        <div class="confirming_popup_subheader">
+            Всю подробную информацию о записи вы можете найти в своём личном кабинете
+        </div>
+        <button id="closeButton" class="banner_btn">Назад к расписанию</button></a>
+    </div>
+
+    <div id="filterMenu" class="filter_menu xl-hidden">
+        <div class="filter_menu_header">
+            Фильтры
+        </div>
+        <div class="filter_menu_filer_name">
+            Тренеры
+        </div>
+        <div class="filter_menu_filer_options_container">
+            <label>
+                <input type="checkbox">
+                <div class="filter_menu_filer_options">Юлия Антипова</div>
+            </label>
+            <label>
+                <input type="checkbox">
+                <div class="filter_menu_filer_options">Артём Макаров</div>
+            </label>
+            <label>
+                <input type="checkbox">
+                <div class="filter_menu_filer_options">Елена Полякова</div>
+            </label>
+        </div>
+        <div class="filter_menu_filer_name">
+            Тренировки
+        </div>
+        <div class="filter_menu_filer_options_container">
+            <label>
+                <input type="checkbox">
+                <div class="filter_menu_filer_options">Йога</div>
+            </label>
+            <label>
+                <input type="checkbox">
+                <div class="filter_menu_filer_options">Растяжка</div>
+            </label>
+            <label>
+                <input type="checkbox">
+                <div class="filter_menu_filer_options">Фитнес</div>
+            </label>
+        </div>
+    </div>
+
+    <div id="footerContainer"></div>
+    <script src="js/trainings_data.js"></script>
+    <script src="js/interactive_elems/filters.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/elements/header.js"></script>
+    <script src="js/elements/footer.js"></script>
+    <script src="js/interactive_elems/trainer_popup.js"></script>
+</body>
+
+
+</html>
