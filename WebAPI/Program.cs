@@ -22,11 +22,6 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseCors();
 
-app.UseDefaultFiles(new DefaultFilesOptions
-{
-    DefaultFileNames = new List<string> { "/src/index.html" }
-});
-
 //Users middleware
 string middlewareUsersPath = "/api/users";
 
