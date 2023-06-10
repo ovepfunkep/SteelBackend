@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\SteelFrontend\**" />
+    <Content Remove="wwwroot\SteelFrontend\**" />
+    <EmbeddedResource Remove="wwwroot\SteelFrontend\**" />
+    <None Remove="wwwroot\SteelFrontend\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="bin\Debug\net6.0\appsettings.Development.json" />
     <Content Include="bin\Debug\net6.0\appsettings.json" />
     <Content Include="bin\Debug\net6.0\WebAPI.deps.json" />
@@ -62,10 +69,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\DataBase\DataBase.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\SteelFrontend\" />
   </ItemGroup>
 
 </Project>
