@@ -12,12 +12,13 @@ async function fetchData() {
 fetchData();
 
 document.getElementById("submit").addEventListener("click", () => {
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
     var article =
     {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
         text: document.getElementById("text").value,
-        photo: document.getElementById("photo").value
+        photo: decodedPhoto
     };
     AddArticle(article);
     ClearForms();
@@ -29,17 +30,18 @@ function SelectArticle(article) {
     document.getElementById("name").value = article.name;
     document.getElementById("description").value = article.description;
     document.getElementById("text").value = article.text;
-    document.getElementById("photo").value = article.photo;
+    document.getElementById("photo").value = decodeURIComponent(article.photo);
 }
 
 document.getElementById("update").addEventListener("click", () => {
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
     const article =
     {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
         text: document.getElementById("text").value,
-        photo: document.getElementById("photo").value
+        photo: decodedPhoto
     };
     if (UpdateArticle(article)) {
         ClearForms();
@@ -48,6 +50,7 @@ document.getElementById("update").addEventListener("click", () => {
 
 
 function AddArticleToTable(article) {
+
     if (!news.some(art => art.id === article.id)) news.push(article);
 
     document.getElementById("tableContext").innerHTML += `
@@ -56,7 +59,7 @@ function AddArticleToTable(article) {
         <td>${article.name}</td>
         <td>${article.description}</td>
         <td>${article.text}</td>
-        <td>${article.photo}</td>
+        <td>${decodeURIComponent(article.photo)}</td>
         <td> 
             <button class="btn btn-warning m-2" onclick='SelectArticle(${(JSON.stringify(article))})'>Change</button> 
             <button class="btn btn-danger m-2" onclick='DeleteArticle(${article.id})'>Delete</button> 
@@ -90,7 +93,7 @@ async function GetNews() {
 
 async function UpdateArticle(article) {
     try {
-        const articleString = JSON.stringify(article);
+        const articleString = encodeURIComponent(JSON.stringify(article));
         const response = await fetch(`http://194.87.92.189:5000/api/news/${articleString}`, { method: "PUT" });
 
         if (response.ok === true) {
@@ -139,7 +142,7 @@ function UpdateTableArticle(article) {
                 <td>${article.name}</td>
                 <td>${article.description}</td>
                 <td>${article.text}</td>
-                <td>${article.photo}</td>
+                <td>${decodeURIComponent(article.photo)}</td>
                 <td> 
                     <button class="btn btn-warning m-2" onclick='SelectArticle(${(JSON.stringify(article))})'>Change</button> 
                     <button class="btn btn-danger m-2" onclick='DeleteArticle(${article.id})'>Delete</button> 

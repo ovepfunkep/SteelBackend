@@ -27,9 +27,9 @@ async function openPopup(training, formattedTime) {
         var trainerCardHeaderText = document.querySelector('.trainer_popup_card_text_header');
         var timePopupHeader = document.getElementById('training_time');
         var placesPopupHeader = document.getElementById('training_seats');
-        popupHeaderIcon.setAttribute("src", training.activity.icon);
+        popupHeaderIcon.setAttribute("src", decodeURIComponent(training.activity.photo));
         popupHeaderText.textContent = training.activity.name;
-        trainerCardPhoto.setAttribute("src", training.extendedTeacher.user.photo);
+        trainerCardPhoto.setAttribute("src", decodeURIComponent(training.extendedTeacher.user.photo));
         trainerCardHeaderText.textContent = `${training.extendedTeacher.user.name} ${training.extendedTeacher.user.surname}`;
         timePopupHeader.textContent = formattedTime;
         placesPopupHeader.textContent = training.leftSeats;

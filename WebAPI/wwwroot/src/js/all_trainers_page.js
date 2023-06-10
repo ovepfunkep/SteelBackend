@@ -17,12 +17,12 @@ function AddTrainerToPage(trainer) {
     document.getElementById("trainers_section").innerHTML += `
     <div class="col-12 col-md-6">
                     <div class="content_box upper  ${color}">
-                        <img src="${trainer.user.photo}" class="trainer_photo">
+                        <img src="${decodeURIComponent(trainer.user.photo)}" class="trainer_photo">
                         <div class="mini_box">
                             <h2 class="trainer_names">${trainer.user.name}</h2>
                             <div class="trainer_descr">${trainer.activities && trainer.activities.map(activity => activity.name).join(', ') + ', опыт работы ' + trainer.experience}</div>
                             <button onclick="ChangeToTrainerPage(${trainer.id})"
-                                class="all_btn green_b">Подробнее<img src="icons/back_arrow_subheader3.svg"
+                                class="all_btn green_b">Подробнее<img src="https://svgshare.com/i/u1G.svg"
                                     class="btn_arrow"></button>
                         </div>
                     </div>

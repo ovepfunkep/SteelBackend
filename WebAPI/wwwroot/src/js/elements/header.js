@@ -22,9 +22,23 @@ function initializeHeader() {
         menu.classList.toggle('menu_active');
     });
 
+
+
     searchIcon.addEventListener('click', () => {
         searchBox.classList.toggle('search_box_active');
         searchInput.focus();
+        const results = document.querySelector('.results');
+        results.classList.toggle('results_active');
+
+
+    });
+
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            LoadSearchData(searchInput.value);
+            searchLoaded = true;
+        }
     });
 
     menuItem.forEach(item => {

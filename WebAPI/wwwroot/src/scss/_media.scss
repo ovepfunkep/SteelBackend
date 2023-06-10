@@ -1425,6 +1425,13 @@
             }
         }
     }
+    .day {
+        margin-left: 10px;
+    }
+    summary {
+        display: flex;
+        flex-direction: row;
+    }
     summary::marker {
         color: $acent;
     }

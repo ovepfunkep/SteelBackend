@@ -8,7 +8,7 @@ var accountName = document.querySelector(".account_name");
 accountName.textContent = user.name + ' ' + user.surname;
 var photoButton = document.querySelector(".photo_button");
 photoButton.style.border = "2px solid #787878";
-photoButton.style.backgroundImage = `url(${user.photo})`;
+photoButton.style.backgroundImage = `url(${decodeURIComponent(user.photo)})`;
 
 document.getElementById("name").value = user.name;
 document.getElementById("surname").value = user.surname;
@@ -65,6 +65,11 @@ document.getElementById("update").addEventListener("click", () => {
             city: document.getElementById("town").value
         });
 });
+
+function LogOut() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
 
 async function UpdateUser(user1) {
     try {

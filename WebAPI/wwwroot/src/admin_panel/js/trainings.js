@@ -56,7 +56,7 @@ function AddTrainingToTable(training) {
         <td>${training.totalSeats}</td>
         <td> 
             <button class="btn btn-warning m-2" onclick='SelectTraining(${(JSON.stringify(training))})'>Change</button> 
-            <button class="btn btn-danger m-2" onclick='Deletetraining(${training.id})'>Delete</button> 
+            <button class="btn btn-danger m-2" onclick='DeleteTraining(${training.id})'>Delete</button> 
         </td>
     </tr>`;
 }

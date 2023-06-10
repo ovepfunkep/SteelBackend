@@ -13,12 +13,14 @@ fetchData();
 
 
 document.getElementById("submit").addEventListener("click", () => {
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
+    var decodedIcon = decodeURIComponent(document.getElementById("icon").value)
     var activity =
     {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
-        photo: document.getElementById("photo").value,
-        icon: document.getElementById("icon").value,
+        photo: decodedPhoto,
+        icon: decodedIcon,
         lastsInMinutes: document.getElementById("lastsInMinutes").value,
     };
     AddActivity(activity);
@@ -29,19 +31,21 @@ function SelectActivity(activity) {
     document.getElementById("id").value = activity.id;
     document.getElementById("name").value = activity.name;
     document.getElementById("description").value = activity.description;
-    document.getElementById("photo").value = activity.photo;
-    document.getElementById("icon").value = activity.icon;
+    document.getElementById("photo").value = decodeURIComponent(activity.photo);
+    document.getElementById("icon").value = decodeURIComponent(activity.icon);
     document.getElementById("lastsInMinutes").value = activity.lastsInMinutes;
 }
 
 document.getElementById("update").addEventListener("click", () => {
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
+    var decodedIcon = decodeURIComponent(document.getElementById("icon").value)
     const activity =
     {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
-        photo: document.getElementById("photo").value,
-        icon: document.getElementById("icon").value,
+        photo: decodedPhoto,
+        icon: decodedIcon,
         lastsInMinutes: document.getElementById("lastsInMinutes").value,
     };
     if (UpdateActivity(activity)) {
@@ -57,8 +61,8 @@ function AddActivityToTable(activity) {
         <td>${activity.id}</td>
         <td>${activity.name}</td>
         <td>${activity.description}</td>
-        <td>${activity.photo}</td>
-        <td>${activity.icon}</td>
+        <td>${decodeURIComponent(activity.photo)}</td>
+        <td>${decodeURIComponent(activity.icon)}</td>
         <td>${activity.lastsInMinutes}</td>
         <td> 
             <button class="btn btn-warning m-2" onclick='SelectActivity(${(JSON.stringify(activity))})'>Change</button> 
@@ -95,7 +99,7 @@ async function GetActivities() {
 
 async function UpdateActivity(activity) {
     try {
-        const activitiestring = JSON.stringify(activity);
+        const activitiestring = encodeURIComponent(JSON.stringify(activity));
         const response = await fetch(`http://194.87.92.189:5000/api/activities/${activitiestring}`, { method: "PUT" });
 
         if (response.ok === true) {
@@ -143,8 +147,8 @@ function UpdateTableActivity(activity) {
                 <td>${activity.id}</td>
                 <td>${activity.name}</td>
                 <td>${activity.description}</td>
-                <td>${activity.photo}</td>
-                <td>${activity.icon}</td>
+                <td>${decodeURIComponent(activity.photo)}</td>
+                <td>${decodeURIComponent(activity.icon)}</td>
                 <td>${activity.lastsInMinutes}</td>
                 <td> 
                     <button class="btn btn-warning m-2" onclick='SelectActivity(${(JSON.stringify(activity))})'>Change</button> 

@@ -5,10 +5,12 @@ var data = localStorage.getItem("data");
 var teacher = JSON.parse(data);
 var reviewSectionHeaderAdded = false;
 var showAllBtnClicked = false;
+var dataUser = localStorage.getItem("user");
+var user = JSON.parse(dataUser);
 AwaitData()
 
 function AddReviewToPage(review) {
-    if (!reviews.some(rew => rew.id === review.id)) reviews.push(review);
+    if (!reviews.some(rew => rew.id == review.id)) reviews.push(review);
 
     var reviewSection = document.getElementById("review_section");
 
@@ -17,10 +19,10 @@ function AddReviewToPage(review) {
             <div class="reviews_section_header">
                 <div class="row_inf">
                     <div class="header_marker">
-                        <img src="icons/marker_train.png" class="marker">
+                        <img src="https://lh3.googleusercontent.com/pw/AJFCJaWLc-y1HVQX0m-kwKbwUk0xrBThcB8mDN3VIhNKsTvauRHiA9D_E2fMfzJxhuCPF_cjFV2KX10mSiZR8O-ZZ1hlemuQHQh5rdraIdH8wyVPK8zHt5tbeMI8OSAWeowmXhHS-pBhPaGk3sUpaOya_JBm=w420-h35-s-no?authuser=0" class="marker">
                         <span class="marker_text new_m">Отзывы</span>
                     </div>
-                    <button onclick="ShowAllReviews()" class="all_btn" id="show_all_btn">Смотреть все<img src="icons/back_arrow_subheader2.svg" class="btn_arrow"></button>
+                    <button onclick="ShowAllReviews()" class="all_btn" id="show_all_btn">Смотреть все<img src="https://svgshare.com/i/u18.svg" class="btn_arrow"></button>
                 </div>
             </div>
         `;
@@ -36,12 +38,12 @@ function AddReviewToPage(review) {
                     <div class="header_line">
                         <div class="review_line">
                             <div class="review_img_wrapper">
-                                <img src="${review.user.photo}" class="review_img">
+                                <img src="${decodeURIComponent(review.user.photo)}" class="review_img">
                             </div>
                             <div class="reviewers_name">${review.user.name}</div>
                         </div>
                         <div class="raiting">
-                            <img src="icons/star_filled.svg" class="raiting_img">
+                            <img src="https://svgshare.com/i/u28.svg" class="raiting_img">
                             <div class="raiting_text">${review.rate}</div>
                         </div>
                     </div>
@@ -80,9 +82,9 @@ function ShowAllReviews() {
     // Генерация звездочек в зависимости от значения рейтинга
     for (var i = 1; i <= 5; i++) {
         if (i <= averagerate) {
-            ratingSectionContent += `<img src="icons/star_filled.svg" class="raiting_star">`;
+            ratingSectionContent += `<img src="https://svgshare.com/i/u28.svg" class="raiting_star">`;
         } else {
-            ratingSectionContent += `<img src="icons/star.svg" class="raiting_star">`;
+            ratingSectionContent += `<img src="https://svgshare.com/i/u17.svg" class="raiting_star">`;
         }
     }
 
@@ -101,12 +103,12 @@ function ShowAllReviews() {
                     <div class="header_line">
                         <div class="review_line">
                             <div class="review_img_wrapper">
-                                <img src="${review.user.photo}" class="review_img">
+                                <img src="${decodeURIComponent(review.user.photo)}" class="review_img">
                             </div>
                             <div class="reviewers_name">${review.user.name}</div>
                         </div>
                         <div class="raiting">
-                            <img src="icons/star_filled.svg" class="raiting_img">
+                            <img src="https://svgshare.com/i/u28.svg" class="raiting_img">
                             <div class="raiting_text">${review.rate}</div>
                         </div>
                     </div>
@@ -139,17 +141,17 @@ function ShowReviewForm() {
         <h2 class="review_rate">Оцените работу тренера</h2>
         <hr>
         <div class="rating_stars">
-            <span class="star" data-rating="1"><img src="icons/star.svg" class="raiting_star"></span>
-            <span class="star" data-rating="2"><img src="icons/star.svg" class="raiting_star"></span>
-            <span class="star" data-rating="3"><img src="icons/star.svg" class="raiting_star"></span>
-            <span class="star" data-rating="4"><img src="icons/star.svg" class="raiting_star"></span>
-            <span class="star" data-rating="5"><img src="icons/star.svg" class="raiting_star"></span>
+            <span class="star" data-rating="1"><img src="https://svgshare.com/i/u17.svg" class="raiting_star"></span>
+            <span class="star" data-rating="2"><img src="https://svgshare.com/i/u17.svg" class="raiting_star"></span>
+            <span class="star" data-rating="3"><img src="https://svgshare.com/i/u17.svg" class="raiting_star"></span>
+            <span class="star" data-rating="4"><img src="https://svgshare.com/i/u17.svg" class="raiting_star"></span>
+            <span class="star" data-rating="5"><img src="https://svgshare.com/i/u17.svg" class="raiting_star"></span>
         </div>
 
         <div class="review_section">
             <div class="review_form">
                 <textarea class="review_textarea" placeholder="Напишите ваш отзыв..."></textarea>
-                <button onclick="PostReview()" class="review_submit_btn"><img src="icons/submit.svg" class="review_submit_btn_icon"></button>
+                <button onclick="PostReview()" class="review_submit_btn"><img src="https://svgshare.com/i/u01.svg" class="review_submit_btn_icon"></button>
             </div>
             <h6 class="warning">*При оставлении нового отзыва повторно, первый отзыв автоматически удаляется </h6>
         </div>
@@ -178,9 +180,9 @@ function fillStars() {
     var stars = this.parentNode.getElementsByClassName("raiting_star");
     for (var i = 0; i < stars.length; i++) {
         if (i < rating) {
-            stars[i].setAttribute("src", "icons/star_filled.svg");
+            stars[i].setAttribute("src", "https://svgshare.com/i/u28.svg");
         } else {
-            stars[i].setAttribute("src", "icons/star.svg");
+            stars[i].setAttribute("src", "https://svgshare.com/i/u17.svg");
         }
     }
 }
@@ -192,7 +194,7 @@ function resetStars() {
 
     var stars = this.parentNode.getElementsByClassName("raiting_star");
     for (var i = 0; i < stars.length; i++) {
-        stars[i].setAttribute("src", "icons/star.svg");
+        stars[i].setAttribute("src", "https://svgshare.com/i/u17.svg");
     }
 }
 
@@ -209,9 +211,9 @@ function selectRating() {
     var stars = this.parentNode.getElementsByClassName("raiting_star");
     for (var i = 0; i < stars.length; i++) {
         if (i < rating) {
-            stars[i].setAttribute("src", "icons/star_filled.svg");
+            stars[i].setAttribute("src", "https://svgshare.com/i/u28.svg");
         } else {
-            stars[i].setAttribute("src", "icons/star.svg");
+            stars[i].setAttribute("src", "https://svgshare.com/i/u17.svg");
         }
     }
 
@@ -229,58 +231,51 @@ async function PostReview(review) {
     var reviewText = textarea.value.trim();
 
     if (!reviewText) {
-        // Если отзыв пустой, вывести сообщение об ошибке
         alert("Пожалуйста, напишите ваш отзыв");
         return;
     }
 
-    if (selectedRating === null) {
-        // Если рейтинг не выбран, вывести сообщение об ошибке
+    if (selectedRating == null) {
         alert("Пожалуйста, выберите оценку");
         return;
     }
 
-    try {
-        const reviewString = encodeURIComponent(JSON.stringify({
-            TeacherId: teacher.id,
-            //UserId: localStorage.Get("userId"),
-            Text: reviewText,
-            Rate: selectedRating
-        }))
-        const response = await fetch(`http://194.87.92.189:5000/api/reviews/${reviewString}`, { method: "POST" });
+    // try {
+    const reviewString = encodeURIComponent(JSON.stringify({
+        TeacherId: teacher.id,
+        UserId: user.id,
+        Text: reviewText,
+        Rate: selectedRating
+    }))
+    const response = await fetch(`http://194.87.92.189:5000/api/reviews/${reviewString}`, { method: "POST" });
 
 
 
-        if (response.ok === true) {
-            const data = await response.json();
-            console.log(data);
+    if (response.ok == true) {
+        const data = await response.json();
+        console.log(data);
+        AddReviewToPage(review);
+        location.reload(true)
 
-            // Добавить отзыв на страницу
-            AddReviewToPage(review);
-
-            // Сбросить форму отзыва
-            textarea.value = "";
-            selectedRating = null;
-            var selectedRatingText = document.querySelector(".selected_rating");
-            selectedRatingText.parentNode.removeChild(selectedRatingText);
-
-        } else {
-            const error = await response.json();
-            console.log(error.message);
-            alert("Ошибка при отправке отзыва");
-        }
-    } catch (error) {
-        console.log(error);
+    } else {
+        const error = await response.json();
+        console.log(error.message);
         alert("Ошибка при отправке отзыва");
     }
+
+    //  catch (error) {
+    //     console.log(error);
+    //     alert("Ошибка при отправке отзыва");
+    // }
 }
 
 async function GetReviews() {
     try {
         const response = await fetch(`http://194.87.92.189:5000/api/reviews/teacher/${teacher.id}`);
 
-        if (response.ok === true) {
+        if (response.ok == true) {
             let responseData = await response.json();
+            console.log(responseData)
             reviews = Array.isArray(responseData) ? responseData : [responseData];
         } else {
             const error = await response.json();
@@ -297,7 +292,7 @@ async function AwaitData() {
     lastTwoReviews.forEach(review => AddReviewToPage(review));
 
     document.getElementById("trainer_page_title").innerText = teacher.user.name + ' ' + teacher.user.surname;
-    document.getElementById("account_photo").setAttribute("src", teacher.user.photo);
+    document.getElementById("account_photo").setAttribute("src", decodeURIComponent(teacher.user.photo));
     document.getElementById("account_name").innerText = teacher.user.name + ' ' + teacher.user.surname;
     document.getElementById("account_add_info").innerText = teacher.activities && teacher.activities.map(activity => activity.name).join(', ') + ', опыт работы ' + teacher.experience;
     document.getElementById("city").innerText = teacher.user.city;

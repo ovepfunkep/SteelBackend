@@ -25,7 +25,7 @@ function AddUserAchievmentToPage(UserAchievement) {
     document.getElementById("acepted_achievements").innerHTML += `
     <div class="col-md-6">
     <div class="big_achievment_card_wrapper mt">
-        <img src="${UserAchievement.photo}" class="achievment_img">
+        <img src="${decodeURIComponent(UserAchievement.photo)}" class="achievment_img">
         <div class="text_wrapp">
             <div class="big_achievment_card_header">${UserAchievement.name}</div>
             <div class="big_achievment_card_subheader">${UserAchievement.description}</div>
@@ -41,7 +41,7 @@ function AddAllAchievementsToPage(AllAchievement) {
     document.getElementById("not_acepted_achievements").innerHTML += `
     <div class="col-md-6">
     <div class="big_achievment_card_wrapper disabled mt">
-        <img src="${AllAchievement.photo}" class="achievment_img">
+        <img src="${decodeURIComponent(AllAchievement.photo)}" class="achievment_img">
         <div class="text_wrapp">
             <div class="big_achievment_card_header disabled_text">${AllAchievement.name}</div>
             <div class="big_achievment_card_subheader disabled">${AllAchievement.description}</div>

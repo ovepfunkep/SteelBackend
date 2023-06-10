@@ -11,7 +11,7 @@ function AddteacherToPage(teacher) {
             <div class="trainers_card"  onclick="ChangeToteacherPage (${teacher.id})">
                 <div class="first_circle">
                     <div class="second_circle">
-                        <img src="${teacher.user && teacher.user.photo}" class="circle_img">
+                        <img src="${decodeURIComponent(teacher.user.photo)}" class="circle_img">
                     </div>
                 </div>
                 <h2 class="trainer_name">${teacher.user && teacher.user.name}</h2>
@@ -50,6 +50,6 @@ async function AwaitData() {
     document.getElementById("activity_page_title").innerText = activity.name;
     document.getElementById("training_name").innerText = activity.name;
     document.getElementById("training_descr").innerText = activity.description;
-    document.getElementById("banner").setAttribute("src", activity.photo);
+    document.getElementById("banner").setAttribute("src", decodeURIComponent(activity.photo));
     document.getElementById("training_name").innerText = activity.name;
 }
