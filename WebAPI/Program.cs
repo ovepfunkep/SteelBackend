@@ -787,4 +787,18 @@ app.MapDelete(middlewareReviewsPath + "/{id}", (int id) =>
 });
 
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+
+    endpoints.MapFallbackToFile("index.html");
+
+    endpoints.Map("/", context =>
+    {
+        context.Response.Redirect("/tests");
+        return Task.CompletedTask;
+    });
+});
+
+
 app.Run();
