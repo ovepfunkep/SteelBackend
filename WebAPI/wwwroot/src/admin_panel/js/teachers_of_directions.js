@@ -41,7 +41,7 @@ document.getElementById("update").addEventListener("click", () => {
 });
 
 function AddActivityTeacherToTable(activityTeacher) {
-    if (!activityTeachers.some(tea => tea.id === activityTeacher.id)) activityTeachers.push(activityTeacher);
+    if (!activityTeachers.some(tea => tea.id == activityTeacher.id)) activityTeachers.push(activityTeacher);
 
     document.getElementById("tableContext").innerHTML += `
     <tr id="rowactivityTeacher${activityTeacher.id}">
@@ -79,7 +79,7 @@ async function GetActivityTeachers() {
 
 async function UpdateActivityTeacher(activityTeacher) {
     try {
-        const activityTeacherString = JSON.stringify(activityTeacher);
+        const activityTeacherString = encodeURIComponent(JSON.stringify(activityTeacher));
         const response = await fetch(`http://194.87.92.189:5000/api/activitiesTeachers/${activityTeacherString}`, { method: "PUT" });
 
         if (response.ok === true) {
@@ -104,8 +104,9 @@ async function AddActivityTeacher(activityTeacher) {
         const response = await fetch(`http://194.87.92.189:5000/api/activitiesTeachers/${activityTeacherString}`, { method: "POST" });
 
         if (response.ok === true) {
-            const activityTeacher = await response.json();
-            AddActivityTeacherToTable(activityTeacher);
+            const result = await response.json();
+            console.log(result);
+            AddActivityTeacherToTable(result);
             return true;
         } else {
             const error = await response.json();

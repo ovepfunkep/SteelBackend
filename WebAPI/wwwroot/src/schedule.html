@@ -18,8 +18,9 @@
 
             <div class="col-md-5 col-xl-4">
                 <div class="header_marker">
-                    <img src="icons/marker_train.png" class="marker">
-                    <span class="marker_text"> Расписание </span>
+                    <img src="https://lh3.googleusercontent.com/pw/AJFCJaWLc-y1HVQX0m-kwKbwUk0xrBThcB8mDN3VIhNKsTvauRHiA9D_E2fMfzJxhuCPF_cjFV2KX10mSiZR8O-ZZ1hlemuQHQh5rdraIdH8wyVPK8zHt5tbeMI8OSAWeowmXhHS-pBhPaGk3sUpaOya_JBm=w420-h35-s-no?authuser=0"
+                        class="marker">
+                    <div class="marker_text"> Расписание </div>
                 </div>
             </div>
 
@@ -30,10 +31,12 @@
                 <div class="col-10 col-md-7 col-lg-6 col-xl-7">
                     <div class="month">
                         <button id="prevBtn" class="month_back_btn" onclick="UpdateByDate(DecreaseWeek)"><img
-                                src="icons/month_back_btn1.png" class="month_back_btn_img"></button>
+                                src="https://lh3.googleusercontent.com/pw/AJFCJaWX-hrOWI7oqo8QJHFwlmED1T57pGTOxgJF-7LZppOajVISAxki8A9snp_rPm3ZOMx1zxiuGhRYrhCsv5TLRw87skB4H2sD09iwjlQtjxx-9n1ZXarpqzFJHTbUMiNuTT9AIViAvl-8hUf8eKr-3D4v=w38-h38-s-no?authuser=0"
+                                class="month_back_btn_img"></button>
                         <div class="month_text">Январь 2023</div>
                         <button id="nextBtn" class="month_back_btn" onclick="UpdateByDate(IncreaseWeek)"><img
-                                src="icons/month_back_btn2.png" class="month_back_btn_img"></button>
+                                src="https://lh3.googleusercontent.com/pw/AJFCJaVj_lzqR-jZcctNBWV5chuLDrDJCG4ESn4nPZgRPM8IFPqqnteS9ShZ9DShxqTNNCk6BIbNR_nevpRb2I6i66L2QNLlvQo9bRxu4ynowmA_04z8fmcRNDSoWm-6U4gKOuU53Wcaf3KU_aaUWZMESLcf=w38-h38-s-no?authuser=0"
+                                class="month_back_btn_img"></button>
                     </div>
                 </div>
             </div>
@@ -44,16 +47,16 @@
                         <div class="filter_container">
                             <div class="filter_box">
                                 <div class="filter_title" onclick="toggleFilter('filter1')">Все тренеры</div>
-                                <img src="icons/dropdown_arrow.png" class="filter_img"
-                                    onclick="toggleFilter('filter1')">
+                                <img src="https://lh3.googleusercontent.com/pw/AJFCJaWkEbHJXKNHXy9u0wO_EsllDv4X-jM6kOH0x_55JH6-wON9PUu_kWtl3bqzq6VZyD26Rsm1B3w1i0NqzJH08DlFOcm24fHI2pAppiLKVFw7RyQv2kFH2NTmtBq6EXsjrXxPmzEGcmHFsI0zpKYy6-cO=w22-h13-s-no?authuser=0"
+                                    class="filter_img" onclick="toggleFilter('filter1')">
                                 <div id="filter1" class="filter_content">
 
                                 </div>
                             </div>
                             <div class="filter_box">
                                 <div class="filter_title" onclick="toggleFilter('filter2')">Все занятия</div>
-                                <img src="icons/dropdown_arrow.png" class="filter_img"
-                                    onclick="toggleFilter('filter2')">
+                                <img src="https://lh3.googleusercontent.com/pw/AJFCJaWkEbHJXKNHXy9u0wO_EsllDv4X-jM6kOH0x_55JH6-wON9PUu_kWtl3bqzq6VZyD26Rsm1B3w1i0NqzJH08DlFOcm24fHI2pAppiLKVFw7RyQv2kFH2NTmtBq6EXsjrXxPmzEGcmHFsI0zpKYy6-cO=w22-h13-s-no?authuser=0"
+                                    class="filter_img" onclick="toggleFilter('filter2')">
                                 <div id="filter2" class="filter_content">
 
                                 </div>
@@ -137,7 +140,10 @@
 
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">ПН</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ПН</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div class="row">
@@ -149,7 +155,10 @@
             <div class="demarcation_line"></div>
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">ВТ</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ВТ</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div class="row">
@@ -161,7 +170,10 @@
             <div class="demarcation_line"></div>
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">СР</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">СР</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div class="row">
@@ -173,7 +185,10 @@
             <div class="demarcation_line"></div>
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">ЧТ</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ЧТ</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div class="row">
@@ -185,7 +200,10 @@
             <div class="demarcation_line"></div>
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">ПТ</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ПТ</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div class="row">
@@ -197,7 +215,10 @@
             <div class="demarcation_line"></div>
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">СБ</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">СБ</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div class="row">
@@ -210,7 +231,10 @@
 
             <div class="day-of-week">
                 <details>
-                    <summary class="new_days_of_week_header">ВС</summary>
+                    <summary class="new_days_of_week_header">
+                        <div class="date">0</div>
+                        <div class="day">ВС</div>
+                    </summary>
                     <hr>
                     <div class="column_with_trainings_card">
                         <div id="cards_section" class="row">
@@ -240,13 +264,13 @@
         </div>
         <div class="trainer_popup_mini_header trainer_popup_mini_header_mb">Время занятия</div>
         <div class="trainer_popup_card_content_row trainer_popup_card_content_row_aic">
-            <img src="icons/clock.svg" alt="clock" class="trainer_popup_card_icon">
+            <img src="https://svgshare.com/i/u3F.svg" alt="clock" class="trainer_popup_card_icon">
             <div id="training_time" class="trainer_popup_mini_header trainer_popup_mini_header_mini">16:00 – 18:00</div>
         </div>
 
         <div class="trainer_popup_mini_header trainer_popup_mini_header_mb">Свободных мест</div>
         <div class="trainer_popup_card_content_row trainer_popup_card_content_row_aic">
-            <img src="icons/person.svg" alt="person" class="trainer_popup_card_icon">
+            <img src="https://svgshare.com/i/u2N.svg" alt="person" class="trainer_popup_card_icon">
             <div id="training_seats" class="trainer_popup_mini_header trainer_popup_mini_header_mini">20</div>
         </div>
         <button id="signupButton" class="banner_btn">Записаться</button>

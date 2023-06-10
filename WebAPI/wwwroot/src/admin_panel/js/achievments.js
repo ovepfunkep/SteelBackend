@@ -12,11 +12,12 @@ async function fetchData() {
 fetchData();
 
 document.getElementById("submit").addEventListener("click", () => {
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
     var achievment =
     {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
-        photo: document.getElementById("photo").value
+        photo: decodedPhoto
     }
     AddAchievment(achievment);
     ClearForms();
@@ -26,16 +27,17 @@ function SelectAchievment(achievment) {
     document.getElementById("id").value = achievment.id;
     document.getElementById("name").value = achievment.name;
     document.getElementById("description").value = achievment.description;
-    document.getElementById("photo").value = achievment.photo;
+    document.getElementById("photo").value = decodeURIComponent(achievment.photo);
 }
 
 document.getElementById("update").addEventListener("click", () => {
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
     const achievment =
     {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
-        photo: document.getElementById("photo").value
+        photo: decodedPhoto
     }
     if (UpdateAchievment(achievment)) {
         ClearForms();
@@ -49,7 +51,7 @@ function AddAchievmentToTable(achievment) {
         <td>${achievment.id}</td>
         <td>${achievment.name}</td>
         <td>${achievment.description}</td>
-        <td>${achievment.photo}</td>
+        <td>${decodeURIComponent(achievment.photo)}</td>
         <td> 
             <button class="btn btn-warning m-2" onclick='SelectAchievment(${(JSON.stringify(achievment))})'>Change</button> 
             <button class="btn btn-danger m-2" onclick='DeleteAchievment(${achievment.id})'>Delete</button> 
@@ -83,7 +85,7 @@ async function GetAchievments() {
 
 async function UpdateAchievment(achievment) {
     try {
-        const achievmentString = JSON.stringify(achievment);
+        const achievmentString = encodeURIComponent(JSON.stringify(achievment));
         const response = await fetch(`http://194.87.92.189:5000/api/achievements/${achievmentString}`, { method: "PUT" });
 
         if (response.ok === true) {
@@ -131,7 +133,7 @@ function UpdateTableAchievment(achievment) {
                 <td>${achievment.id}</td>
                 <td>${achievment.name}</td>
                 <td>${achievment.description}</td>
-                <td>${achievment.photo}</td>
+                <td>${decodeURIComponent(achievment.photo)}</td>
                 <td> 
                     <button class="btn btn-warning m-2" onclick='SelectAchievment(${(JSON.stringify(achievment))})'>Change</button> 
                     <button class="btn btn-danger m-2" onclick='DeleteAchievment(${achievment.id})'>Delete</button> 

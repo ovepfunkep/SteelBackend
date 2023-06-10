@@ -19,7 +19,7 @@ function AddArticleToPage(article) {
     <div class="col-md-6 calendar_cards_section">
     <div class="promotions_wrapper" onclick="ChangeToArticlePage(${article.id})">
         <div class="promotions_img_wrapper">
-            <img src="${article.photo}" class="promotions_img">
+            <img src="${decodeURIComponent(article.photo)}" class="promotions_img">
         </div>
         <div class="promotions_text_wrapper">
             <h2 class="promotions_header">${article.name}</h2>

@@ -23,6 +23,7 @@ document.getElementById("submit").addEventListener("click", () => {
     const month = dateParts[1];
     const day = dateParts[2];
     const formattedDate = `${year}-${month}-${day}`;
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
     var user = {
         roleId: document.getElementById("role_id").value || 1,
         surname: document.getElementById("surname").value || 'default',
@@ -33,9 +34,9 @@ document.getElementById("submit").addEventListener("click", () => {
         password: document.getElementById("password").value || 'default',
         gender: document.getElementById("gender").value || 'Мужской',
         dateOfBirth: formattedDate,
-        photo: document.getElementById("photo").value || 'default',
+        photo: decodedPhoto || 'default',
         vkontakte: document.getElementById("vk").value || 'default',
-        telegram: document.getElementById("telegram").value || 'default',
+        telegram: document.getElementById("telegram").value || ' ',
         city: document.getElementById("city").value || 'default'
     };
 
@@ -58,7 +59,7 @@ function SelectUser(user) {
     document.getElementById("password").value = user.password;
     document.getElementById("gender").value = user.gender;
     document.getElementById("dateOfBirth").value = formattedDate;
-    document.getElementById("photo").value = user.photo;
+    document.getElementById("photo").value = decodeURIComponent(user.photo);
     document.getElementById("vk").value = user.vkontakte;
     document.getElementById("telegram").value = user.telegram;
     document.getElementById("city").value = user.city;
@@ -67,14 +68,13 @@ function SelectUser(user) {
 //Обновить по кнопке
 document.getElementById("update").addEventListener("click", () => {
     const dateOfBirthValue = document.getElementById("dateOfBirth").value || '01-01-0001T00:00:00';
-    console.log(dateOfBirthValue)
 
-    // Преобразуем значение в нужный формат yyyy-MM-dd
     const dateParts = dateOfBirthValue.split("T")[0].split("-");
     const year = dateParts[0];
     const month = dateParts[1];
     const day = dateParts[2];
     const formattedDate = `${year}-${month}-${day}T01:01:01`;
+    var decodedPhoto = decodeURIComponent(document.getElementById("photo").value)
     const user =
     {
         id: document.getElementById("ID").value,
@@ -87,7 +87,7 @@ document.getElementById("update").addEventListener("click", () => {
         password: document.getElementById("password").value,
         gender: document.getElementById("gender").value,
         dateOfBirth: formattedDate,
-        photo: document.getElementById("photo").value,
+        photo: decodedPhoto,
         vkontakte: document.getElementById("vk").value,
         telegram: document.getElementById("telegram").value,
         city: document.getElementById("city").value
@@ -113,7 +113,7 @@ function AddUserToTable(user) {
         <td>${user.password}</td>
         <td>${user.gender}</td>
         <td>${user.dateOfBirth}</td>
-        <td>${user.photo}</td>
+        <td>${decodeURIComponent(user.photo)}</td>
         <td>${user.vkontakte}</td>
         <td>${user.telegram}</td>
         <td>${user.city}</td>
@@ -218,7 +218,7 @@ function UpdateTableUser(user) {
                 <td>${user.password}</td>
                 <td>${user.gender}</td>
                 <td>${user.dateOfBirth}</td>
-                <td>${user.photo}</td>
+                <td>${decodeURIComponent(user.photo)}</td>
                 <td>${user.vkontakte}</td>
                 <td>${user.telegram}</td>
                 <td>${user.city}</td>
@@ -235,7 +235,7 @@ async function DeleteUser(userid) {
 
         if (response.ok === true) {
             DeleteTableUser(userid);
-
+            console.log(await response.json())
             return true;
         } else {
             const error = await response.json();
@@ -250,6 +250,7 @@ async function DeleteUser(userid) {
 
 //Удалить пользователя из таблицы
 function DeleteTableUser(userid) {
+    console.log(userid)
     users.splice(users.indexOf(user => user.id === userid), 1);
     document.getElementById(`rowUser${userid}`).remove();
 }

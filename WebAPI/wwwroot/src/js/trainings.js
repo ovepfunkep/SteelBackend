@@ -15,7 +15,8 @@ fetchData();
 
 function AddActivityToPage(activity) {
     if (!activities.some(act => act.id === activity.id)) activities.push(activity);
-
+    const descriptions = activity.description.split('.');
+    const selectedDescriptions = descriptions.slice(0, 2);
     document.getElementById("activity_card_container").innerHTML += `
     <div class="container">
 
@@ -23,39 +24,39 @@ function AddActivityToPage(activity) {
 
         <div class="trainings_card_text_wrapper">
             <div class="card_header">
-                <img src="${activity.icon}" class="mini_icon">
+                <img src="${decodeURIComponent(activity.icon)}" class="mini_icon">
                 <h2 class="card_name">${activity.name}</h2>
             </div>
             <div class="card_descr">
-                ${activity.description}
+                ${selectedDescriptions}
             </div>
             <button onclick="ChangeToActivityPage(${activity.id})" class="all_btn">Подробнее<img
-                    src="icons/back_arrow_subheader3.svg" class="btn_arrow"></button>
+                    src="https://svgshare.com/i/u1G.svg" class="btn_arrow"></button>
         </div>
 
-        <img src="${activity.photo}" class="trainings_card_mini_img">
+        <img src="${decodeURIComponent(activity.photo)}" class="trainings_card_mini_img">
     </div>
 
     <div class="row md-hidden_on_index  first_card">
         <div class="col-md-6 offset-md-0 no_pad_r ">
             <div class="trainings_card_wrapp">
-                <img src="${activity.photo}" class="trainings_card_img">
+                <img src="${decodeURIComponent(activity.photo)}" class="trainings_card_img">
             </div>
 
         </div>
         <div class="col-md-6 offset-md-0 no_pad_l">
             <div class="card_description">
                 <div class="header">
-                    <img src="${activity.icon}" class="mini_icon">
+                    <img src="${decodeURIComponent(activity.icon)}" class="mini_icon">
                     <h2 class="card_name">${activity.name}</h2>
                 </div>
 
                 <div class="text">
-                ${activity.description}
+                ${selectedDescriptions}
                 </div>
 
                 <button onclick="ChangeToActivityPage(${activity.id})" class="all_btn green_b">Подробнее<img
-                        src="icons/back_arrow_subheader3.svg" class="btn_arrow"></button>
+                        src="https://svgshare.com/i/u1G.svg" class="btn_arrow"></button>
             </div>
 
         </div>

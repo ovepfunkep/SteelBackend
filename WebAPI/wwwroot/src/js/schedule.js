@@ -1,7 +1,8 @@
 
 
 let selectedDate = new Date();
-var containers = document.querySelectorAll(document.documentElement.clientWidth > 768 ? '.line_trainings .column_with_trainings_card' : '.column_with_trainings_card .row');
+var containers = document.querySelectorAll(document.documentElement.clientWidth > 768 ? '.line_trainings .column_with_trainings_card' :
+    '.day-of-week');
 
 awaitData();
 
@@ -45,13 +46,17 @@ async function UpdateByDate(changeWeek) {
     }
     else {
         containers.forEach(function (container) {
-            container.innerHTML = '';
+            container.querySelector('.row').innerHTML = '';
         });
     }
 
 
     containers.forEach(function (container) {
         if (document.documentElement.clientWidth > 768) container.querySelector('.date').textContent = currentDateMonday.getDate();
+        else {
+            console.log(container.querySelector('.new_days_of_week_header .date').textContent);
+            container.querySelector('.new_days_of_week_header .date').textContent = currentDateMonday.getDate();
+        }
         trainings.filter(training => {
             var trainingDate = new Date(training.dateTimeStart);
             return trainingDate.getDate() == currentDateMonday.getDate() && IsCompatible(training);
@@ -70,7 +75,7 @@ async function UpdateByDate(changeWeek) {
 
             const formattedTime = `${startHours}:${startMinutes} – ${endHours}:${endMinutes}`;
 
-            var tempContainer = document.documentElement.clientWidth > 768 ? container.querySelector('.cards') : container;
+            var tempContainer = document.documentElement.clientWidth > 768 ? container.querySelector('.cards') : container.querySelector('.column_with_trainings_card');
 
             tempContainer.innerHTML += document.documentElement.clientWidth > 768 ?
                 `

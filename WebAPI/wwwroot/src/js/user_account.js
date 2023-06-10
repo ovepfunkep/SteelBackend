@@ -28,45 +28,45 @@ async function AddUserToPage(user) {
     document.getElementById("account_header_info").innerHTML += `
         <div class="container">
             <div class="photo_wrapper">
-                <img src="${user.photo}" class="account_photo">
-        </div>
+                <img src="${decodeURIComponent(user.photo)}" class="account_photo">
+        </div>       
         <div class="account_content">
             <div class="account_name">${user.name} ${user.surname}</div>
             <div class="account_age">${age} ${ageText}</div>
             <div class="account_descr">
-                <img src="icons/pin.svg" alt="pin" class="account_icon">
+                <img src="https://svgshare.com/i/u2K.svg" alt="pin" class="account_icon">
                 <div class="account_text">${user.city}</div>
-                <img src="icons/vk_logo.svg" class="account_icon sec">
+                <img src="https://svgshare.com/i/u29.svg" class="account_icon sec">
                 <div class="account_text">${user.vkontakte}</div>
-                <img src="icons/telega.svg" class="account_icon sec">
+                <img src="https://svgshare.com/i/u1n.svg" class="account_icon sec">
                 <div class="account_text">${user.telegram}</div>
-                <img src="icons/info.svg"  id="account_icon_add_info"
+                <img src="https://svgshare.com/i/u2s.svg"  id="account_icon_add_info"
                 class="account_icon sec xl-hidden">
                 </div>
                 </div>
-                <button onclick="document.location='settings.html'" class="gear_btn"><img src="icons/gear.svg"
+                <button onclick="document.location='settings.html'" class="gear_btn"><img src="https://svgshare.com/i/u1y.svg"
                 class="gear"></button>
             </div>
 `
 
     document.getElementById("additional_info").innerHTML += `
         <div class="info_col">
-            <img src="icons/phone.svg" alt="pin" class="info_icon">
+            <img src="https://svgshare.com/i/u2A.svg" alt="pin" class="info_icon">
             <div class="info_text">${formattedPhoneNumber}</div>
         </div>
         <div class="info_col down">
-            <img src="icons/convert.svg" alt="pin" class="info_icon">
+            <img src="https://svgshare.com/i/u1Q.svg" alt="pin" class="info_icon">
             <div class="info_text">${user.email}</div>
         </div>
 `
 
     document.getElementById("popup_add_info").innerHTML += `
 <div class="popup_row_inf">
-                <img src="icons/phone.svg" alt="phone" class="popup_icon">
+                <img src="https://svgshare.com/i/u2A.svg" alt="phone" class="popup_icon">
                 <div class="popup_text">${formattedPhoneNumber}</div>
             </div>
             <div class="popup_row_inf">
-                <img src="icons/convert.svg" alt="phone" class="popup_icon">
+                <img src="https://svgshare.com/i/u1Q.svg" alt="phone" class="popup_icon">
                 <div class="popup_text">${user.email}</div>
             </div>
 `
