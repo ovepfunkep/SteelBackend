@@ -116,7 +116,7 @@ function AddAchievmentToPage(achievement) {
     document.getElementById("achievment_block").innerHTML += `
     <div class="card_wrapper">
     <div class="achievment_card">
-        <img src="${achievement.photo}" class="achievment_img">
+        <img src="${decodeURIComponent(achievement.photo)}" class="achievment_img">
     </div>
     <div class="achievment_card_name">${achievement.name}</div>
 </div>

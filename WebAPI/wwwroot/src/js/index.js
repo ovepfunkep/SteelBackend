@@ -2,14 +2,15 @@ searchIconPhone = document.querySelector('.search_phone_image'),
     searchBoxPhone = document.querySelector('.search_box_phone'),
     searchInputPhone = document.querySelector('.search_phone_input');
 
-searchIconPhone.addEventListener('click', () => {
-    LoadSearchData(searchInputPhone.value);
-    searchLoaded = true;
-});
+
 searchBoxPhone.addEventListener('click', () => {
     searchInputPhone.focus();
     const results = document.querySelector('.results');
     results.classList.toggle('results_active');
+});
+searchIconPhone.addEventListener('click', () => {
+    LoadSearchData(searchInputPhone.value);
+    searchLoaded = true;
 });
 
 
