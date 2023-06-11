@@ -2111,6 +2111,15 @@
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 12;
     }
+    .search_phone_input::-webkit-search-cancel-button {
+        display: none;
+    }
+
+    .search_phone_input::-webkit-search-decoration,
+    .search_phone_input::-webkit-search-results-button,
+    .search_phone_input::-webkit-search-results-decoration {
+        display: none;
+    }
 }
 
 @media (max-width: 767px) {

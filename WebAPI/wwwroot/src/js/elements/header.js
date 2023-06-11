@@ -39,6 +39,8 @@ function initializeHeader() {
         }
     });
 
+
+
     menuItem.forEach(item => {
         item.addEventListener('click', () => {
             closeMenu();
