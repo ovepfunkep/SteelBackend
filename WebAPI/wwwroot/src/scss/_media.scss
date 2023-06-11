@@ -2156,13 +2156,14 @@
         width: 24px;
         height: 24px;
     }
+    .trainings_card_mini_img {
+        height: 233px;
+        width: 160px;
+        object-fit: cover;
+    }
     .trainings_card_wrapper_mini {
         height: 233px;
-        .trainings_card_mini_img {
-            height: 233px;
-            width: 160px;
-            object-fit: cover;
-        }
+
         .trainings_card_text_wrapper {
             width: 232px;
             padding: 14px 16px 8px 14px;

@@ -1,20 +1,3 @@
-searchIconPhone = document.querySelector('.search_phone_image'),
-    searchBoxPhone = document.querySelector('.search_box_phone'),
-    searchInputPhone = document.querySelector('.search_phone_input');
-
-
-searchBoxPhone.addEventListener('click', () => {
-    searchInputPhone.focus();
-    const results = document.querySelector('.results');
-    results.classList.toggle('results_active');
-});
-searchIconPhone.addEventListener('click', () => {
-    LoadSearchData(searchInputPhone.value);
-    searchLoaded = true;
-});
-
-
-
 function AddactivityToPage(activity) {
     if (!activities.some(act => act.id === activity.id)) activities.push(activity);
     const descriptions = activity.description.split('.');

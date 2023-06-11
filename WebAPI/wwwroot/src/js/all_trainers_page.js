@@ -1,4 +1,4 @@
-let trainers = [];
+
 
 async function fetchData() {
     try {

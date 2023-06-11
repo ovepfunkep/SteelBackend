@@ -1,4 +1,3 @@
-let activities = [];
 
 
 async function fetchData() {

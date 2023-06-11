@@ -1,5 +1,3 @@
-let news = [];
-
 
 async function fetchData() {
     try {
