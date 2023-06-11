@@ -1,3 +1,18 @@
+searchIconPhone = document.querySelector('.search_phone_image'),
+    searchBoxPhone = document.querySelector('.search_box_phone'),
+    searchInputPhone = document.querySelector('.search_phone_input');
+
+searchIconPhone.addEventListener('click', () => {
+    LoadSearchData(searchInputPhone.value);
+    searchLoaded = true;
+});
+searchBoxPhone.addEventListener('click', () => {
+    searchInputPhone.focus();
+    const results = document.querySelector('.results');
+    results.classList.toggle('results_active');
+});
+
+
 
 function AddactivityToPage(activity) {
     if (!activities.some(act => act.id === activity.id)) activities.push(activity);
@@ -13,7 +28,7 @@ function AddactivityToPage(activity) {
             <h2 class="card_name">${activity.name}</h2>
         </div>
         <div class="card_descr">
-        ${activity.description}
+        ${selectedDescriptions}
         </div>
         <button onclick="ChangeToActivityPage(${activity.id})" class="all_btn">Подробнее<img
                 src="https://svgshare.com/i/u1G.svg" class="btn_arrow"></button>

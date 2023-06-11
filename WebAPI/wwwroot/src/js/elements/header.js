@@ -29,8 +29,6 @@ function initializeHeader() {
         searchInput.focus();
         const results = document.querySelector('.results');
         results.classList.toggle('results_active');
-
-
     });
 
     searchInput.addEventListener('keydown', (event) => {
