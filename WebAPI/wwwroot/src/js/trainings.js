@@ -1,5 +1,3 @@
-
-
 async function fetchData() {
     try {
         activities = await GetActivities();
