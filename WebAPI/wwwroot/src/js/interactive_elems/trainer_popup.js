@@ -38,6 +38,16 @@ async function openPopup(training, formattedTime) {
         console.log(training)
         console.log(userFromLS)
         console.log(userAlreadyRegistered)
+
+        var currentDate = new Date();
+        var trainingDate = new Date(training.dateTimeStart);
+        if (trainingDate < currentDate) {
+            button.textContent = "Занятие уже прошло";
+            button.classList.add("banner_btn_disabled");
+            button.disabled = true;
+            return; // Выход из функции, если занятие уже прошло
+        }
+
         if (userAlreadyRegistered) {
             button.textContent = "Вы уже записаны";
             button.classList.add("banner_btn_disabled")
