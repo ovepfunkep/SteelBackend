@@ -59,7 +59,9 @@ async function UpdateByDate(changeWeek) {
         }
         trainings.filter(training => {
             var trainingDate = new Date(training.dateTimeStart);
-            return trainingDate.getDate() == currentDateMonday.getDate() && IsCompatible(training);
+            return trainingDate.getDate() == currentDateMonday.getDate() &&
+                trainingDate.getMonth() == currentDateMonday.getMonth() &&
+                IsCompatible(training);
         }).forEach(training => {
             const startTime = training.dateTimeStart.split('T')[1];
             const endTime = training.dateTimeEnd.split('T')[1];
